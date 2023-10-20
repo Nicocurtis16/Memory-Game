@@ -1,0 +1,341 @@
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+.landingpage {
+  height: 100vh;
+  background-color: #152938;
+  place-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: "Atkinson Hyperlegible", sans-serif;
+}
+#title {
+  padding-bottom: 4rem;
+  padding-top: 7rem;
+  font-weight: 700;
+  font-size: 40px;
+  color: white;
+}
+
+.panel {
+  margin: 0;
+  height: 559px;
+  width: 654px;
+  /* margin-top: 8rem; */
+  background-color: white;
+  border-radius: 20px;
+}
+#theme_sel {
+  margin-top: 3rem;
+  margin-left: 3rem;
+}
+h2 {
+  font-weight: 700;
+  color: #7191a5;
+  padding-bottom: 1rem;
+}
+.button-label,
+.button-label2,
+.button-label1 {
+  display: inline-block;
+  background-color: #bcced9;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 26px;
+  text-align: center;
+
+  height: 52px;
+  width: 256px;
+  font-size: 26px;
+  font-weight: 700;
+  margin-right: 2rem;
+  line-height: 52px;
+}
+.button-label:hover {
+  background-color: #6395b8;
+}
+.hidden-radio {
+  display: none;
+}
+.button-label.selected {
+  background-color: #304859 !important;
+  border-color: #304859 !important;
+  color: #fff !important;
+}
+
+#prayers,
+#grid {
+  margin-top: 2rem;
+  margin-left: 3rem;
+}
+.button-label1 {
+  width: 119px;
+  margin-right: 1.2rem;
+}
+.button-label1:hover {
+  background-color: #6395b8;
+}
+.hidden-radio {
+  display: none;
+}
+
+.button-label2:hover {
+  background-color: #6395b8;
+}
+.hidden-radio {
+  display: none;
+}
+
+#start {
+  margin-top: 2rem;
+  margin-left: 3rem;
+  height: 70px;
+  width: 541px;
+  background-color: #fda214;
+  border-radius: 26px;
+  border: 0;
+  color: white;
+  font-size: 26px;
+  font-weight: 700;
+  cursor: pointer;
+}
+#start:hover {
+  background-color: #ffb84a;
+}
+.selected {
+  background-color: #304859;
+  border-color: #304859; /* You can set border color as well */
+  color: #fff; /* Text color for selected radio button */
+}
+/* Solo panel for 4 by 4 */
+.solo1 {
+  height: 100vh;
+  background-color: #ffffff;
+
+  display: flex;
+  justify-content: center;
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  align-items: center;
+}
+.solopanel {
+  margin: 0;
+  height: 800px;
+  width: 1100px;
+  background-color: white;
+  justify-content: center;
+}
+
+#btn1,
+#btn2 {
+  width: 149px;
+  height: 52px;
+  background-color: #fda214;
+  color: white;
+  border-radius: 26px;
+  border: 0;
+  font-weight: 700;
+  font-size: 20px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+#btn2 {
+  background-color: #979797;
+}
+#titlesolo {
+  font-size: 40px;
+  color: rgb(0, 0, 0);
+  font-weight: 700;
+}
+.top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* numbers */
+/* Style for the circular elements */
+.num {
+  /* width: 100%; */
+  margin-top: 100px;
+  background-color: #152938;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 500px; /* Adjust this to fit your design */
+  margin: 5rem auto;
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #304859; /* Default background color, black for hidden numbers */
+  color: transparent; /* Hide the numbers initially */
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+/* time and moves */
+/* #time,
+#moves, */
+.display {
+  width: 215px;
+  height: 72px;
+  background-color: #dfe7ec;
+  border-radius: 10px;
+
+  line-height: 72px;
+  padding: 0.5rem;
+  justify-content: space-between;
+  display: flex;
+}
+h1 {
+  color: #7191a5;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.moves-count {
+  font-size: 32px;
+  color: #304859;
+  padding-left: 10px;
+  font-weight: 700;
+}
+.moves-count-1 {
+  font-size: 32px;
+  color: #304859;
+  padding-left: 80px;
+  font-weight: 700;
+}
+
+.down {
+  width: 43%;
+  display: flex;
+  justify-content: space-between;
+}
+.center {
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+#btn3 {
+  visibility: hidden;
+}
+.btn1,
+.btn2,
+.btn3 {
+  visibility: hidden;
+}
+/* main popup */
+
+.mainpopup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#myPopup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.popup-content {
+  background-color: white;
+  text-align: center;
+
+  border-radius: 5px;
+  /* box-shadow: 0px 0px 10px 0px #000; */
+  width: 654px;
+  height: 510px;
+  border-radius: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+#popuptitle {
+  margin-top: 40px;
+  font-size: 48px;
+  color: #152938;
+  margin-bottom: 15px;
+}
+.popupdisplay {
+  background-color: #dfe7ec;
+  width: 560px;
+  height: 72px;
+  border-radius: 10px;
+  margin-top: 15px;
+  /* margin-left: 50px; */
+  line-height: 72px;
+  display: flex;
+  justify-content: space-between;
+}
+#poptxt1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #7191a5;
+  margin-left: 30px;
+}
+#poptxt2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #304859;
+  margin-right: 30px;
+}
+#poptxt3 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #304859;
+  margin-right: 30px;
+}
+h3 {
+  color: #7191a5;
+  margin-bottom: 40px;
+}
+
+/* Style for the buttons at the bottom */
+.popup-button {
+  border: none;
+  border-radius: 26px;
+  cursor: pointer;
+}
+#btn11,
+#btn22 {
+  width: 260px;
+  height: 52px;
+  font-size: 20px;
+  font-weight: 700;
+}
+#btn11 {
+  background-color: #fda214;
+  color: white;
+}
+#btn22 {
+  background-color: #dfe7ec;
+  color: #304859;
+}
+.btn_cont {
+  margin: 40px auto;
+  width: 560px;
+  justify-content: space-between;
+  display: flex;
+}
