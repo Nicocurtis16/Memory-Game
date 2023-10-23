@@ -104,6 +104,7 @@ shuffledNumbers.forEach((number) => {
   grid.appendChild(circle);
 });
 
+// Define variables to keep track of selected circles
 let firstSelection = null;
 let secondSelection = null;
 
@@ -112,8 +113,9 @@ function checkForMatch() {
   const selectedCircles = Array.from(
     document.querySelectorAll('.circle[data-matched="true"]')
   );
+
   if (selectedCircles.length === shuffledNumbers.length) {
-    clearInterval(timerInterval);
+    clearInterval(timerInterval); // Stop the timer
     displayPopup();
   } else if (selectedCircles.length === 2) {
     const [circle1, circle2] = selectedCircles;
@@ -124,6 +126,16 @@ function checkForMatch() {
       circle1.dataset.matched = "matched";
       circle2.dataset.matched = "matched";
       pairs++;
+    } else {
+      // They do not match, flip them back
+      setTimeout(() => {
+        circle1.style.backgroundColor = "#304859"; // Set background color back to the default
+        circle2.style.backgroundColor = "#304859";
+        circle1.style.color = "transparent"; // Hide the numbers
+        circle2.style.color = "transparent";
+        circle1.dataset.matched = "false";
+        circle2.dataset.matched = "false";
+      }, 1000); // Flip back after 1 second
     }
   }
 }
