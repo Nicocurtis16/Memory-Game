@@ -1,5 +1,6 @@
-const themeLabels = document.querySelectorAll('label[for^="theme-"]');
+// Add event listeners for theme selection, number of prayers, and grid size labels
 
+const themeLabels = document.querySelectorAll('label[for^="theme-"]');
 themeLabels.forEach((label) => {
   label.addEventListener("click", () => {
     // Remove the "selected" class from all labels
@@ -10,8 +11,8 @@ themeLabels.forEach((label) => {
     label.classList.add("selected");
   });
 });
-const prayersLabels = document.querySelectorAll('label[for^="prayers-"]');
 
+const prayersLabels = document.querySelectorAll('label[for^="prayers-"]');
 prayersLabels.forEach((label) => {
   label.addEventListener("click", () => {
     // Remove the "selected" class from all labels
@@ -22,8 +23,8 @@ prayersLabels.forEach((label) => {
     label.classList.add("selected");
   });
 });
-const gridSizeLabels = document.querySelectorAll('label[for^="grid-"]');
 
+const gridSizeLabels = document.querySelectorAll('label[for^="grid-"]');
 gridSizeLabels.forEach((label) => {
   label.addEventListener("click", () => {
     // Remove the "selected" class from all labels
@@ -35,24 +36,14 @@ gridSizeLabels.forEach((label) => {
   });
 });
 
-// Switching from one class to another
+// Define variables for various elements
 
 const startButton = document.getElementById("start");
 const landingPage = document.querySelector(".landingpage");
 const soloPage = document.querySelector(".solo1");
-
-startButton.addEventListener("click", () => {
-  // Check if the conditions are met
-  const themeNumbers = document.getElementById("theme-numbers").checked;
-  const prayers1 = document.getElementById("prayers-1").checked;
-  const grid4x4 = document.getElementById("grid-4x4").checked;
-
-  if (themeNumbers && prayers1 && grid4x4) {
-    // Conditions met, hide landingpage, show solo1
-    landingPage.classList.add("hidden");
-    soloPage.classList.remove("hidden");
-  }
-});
+const popup = document.getElementById("myPopup");
+const restartButton = document.getElementById("btn11");
+const setupNewGameButton = document.getElementById("btn22");
 
 const grid = document.querySelector(".grid");
 const numbers = [
@@ -73,15 +64,13 @@ const numbers = [
   "8",
   "8",
 ];
-const shuffledNumbers = shuffleArray(numbers);
+let shuffledNumbers = shuffleArray(numbers);
 
 const timeCountText = document.querySelector(".moves-count-1");
 const movesCountText = document.querySelector(".moves-count");
-const popup = document.getElementById("myPopup");
 const popupTitle = document.getElementById("popuptitle");
 const popupTimeText = document.getElementById("poptxt2");
 const popupMovesText = document.getElementById("poptxt3");
-const restartButton = document.getElementById("btn11");
 
 let startTime = 0;
 let timerInterval;
@@ -89,6 +78,7 @@ let moves = 0;
 let pairs = 0;
 
 // Create the grid dynamically
+
 shuffledNumbers.forEach((number) => {
   const circle = document.createElement("div");
   circle.classList.add("circle");
@@ -117,6 +107,7 @@ shuffledNumbers.forEach((number) => {
 let firstSelection = null;
 let secondSelection = null;
 
+// Function to check for matching pairs
 function checkForMatch() {
   const selectedCircles = Array.from(
     document.querySelectorAll('.circle[data-matched="true"]')
@@ -137,6 +128,7 @@ function checkForMatch() {
   }
 }
 
+// Function to update the elapsed time
 function updateTime() {
   const currentTime = new Date().getTime();
   const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
@@ -145,6 +137,7 @@ function updateTime() {
   timeCountText.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 }
 
+// Function to shuffle an array
 function shuffleArray(array) {
   const shuffledArray = array.slice();
   for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -154,6 +147,7 @@ function shuffleArray(array) {
   return shuffledArray;
 }
 
+// Function to display the game completion popup
 function displayPopup() {
   popupTitle.textContent = "You did it!";
   popupTimeText.textContent = timeCountText.textContent;
@@ -161,7 +155,7 @@ function displayPopup() {
   popup.style.display = "block";
 }
 
-// Event listener for the "Restart" button
+// Event listener for the "Restart" button in the popup
 restartButton.addEventListener("click", () => {
   // Clear the grid
   grid.innerHTML = "";
@@ -200,4 +194,63 @@ restartButton.addEventListener("click", () => {
 
   // Hide the popup
   popup.style.display = "none";
+});
+
+// Event listener for the "Setup New Game" button in the popup
+setupNewGameButton.addEventListener("click", () => {
+  // Clear the grid
+  grid.innerHTML = "";
+
+  // Reset game variables
+  moves = 0;
+  pairs = 0;
+  startTime = 0;
+  clearInterval(timerInterval);
+  timeCountText.textContent = "0:00";
+  movesCountText.textContent = "0";
+
+  // Re-shuffle numbers and re-create the grid
+  shuffledNumbers = shuffleArray(numbers);
+  shuffledNumbers.forEach((number) => {
+    const circle = document.createElement("div");
+    circle.classList.add("circle");
+    circle.textContent = number;
+    circle.dataset.matched = "false";
+    circle.addEventListener("click", () => {
+      if (circle.dataset.matched === "false") {
+        circle.style.backgroundColor = "#BCCED9";
+        circle.style.color = "#F2F2F2";
+        circle.dataset.matched = "true";
+        checkForMatch();
+        moves++;
+        movesCountText.textContent = Math.floor(moves / 2);
+        if (moves === 1) {
+          startTime = new Date().getTime();
+          timerInterval = setInterval(updateTime, 1000);
+        }
+      }
+    });
+    grid.appendChild(circle);
+  });
+
+  // Hide the popup
+  popup.style.display = "none";
+
+  // Hide the current class (solo1) and show the landing page
+  landingPage.classList.remove("hidden");
+  soloPage.classList.add("hidden");
+});
+
+// Event listener for the "Start Game" button on the landing page
+startButton.addEventListener("click", () => {
+  // Check if the conditions are met
+  const themeNumbers = document.getElementById("theme-numbers").checked;
+  const prayers1 = document.getElementById("prayers-1").checked;
+  const grid4x4 = document.getElementById("grid-4x4").checked;
+
+  if (themeNumbers && prayers1 && grid4x4) {
+    // Conditions met, hide landing page, show solo1
+    landingPage.classList.add("hidden");
+    soloPage.classList.remove("hidden");
+  }
 });
