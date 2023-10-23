@@ -8,50 +8,100 @@
     <link rel="stylesheet" href="mediaqurey.css" />
   </head>
   <body>
-    <!-- <div class="landingpage">
+    <div class="landingpage">
       <p id="title">memory</p>
-      <div class="panel"> -->
-    <!-- Select Theme -->
-    <!-- <div id="theme_sel">
-  <h2 id="theme">Select Theme</h2>
-  <label class="button-label" for="theme-numbers">Numbers</label>
-  <input type="radio" class="hidden-radio" id="theme-numbers" name="theme" value="Numbers">
+      <div class="panel">
+        <!-- Select Theme -->
+        <div id="theme_sel">
+          <h2 id="theme">Select Theme</h2>
+          <label class="button-label" for="theme-numbers">Numbers</label>
+          <input
+            type="radio"
+            class="hidden-radio"
+            id="theme-numbers"
+            name="theme"
+            value="Numbers"
+          />
 
-  <label class="button-label" for="theme-icons">Icons</label>
-  <input type="radio" class="hidden-radio" id="theme-icons" name="theme" value="Icons">
-</div> -->
+          <label class="button-label" for="theme-icons">Icons</label>
+          <input
+            type="radio"
+            class="hidden-radio"
+            id="theme-icons"
+            name="theme"
+            value="Icons"
+          />
+        </div>
 
-    <!-- Number of Prayers -->
-    <!-- <div id="prayers">
-  <h2 id="theme">Number of Prayers</h2>
-  <label class="button-label1" for="prayers-1">1</label>
-  <input type="radio" class="hidden-radio" id="prayers-1" name="prayers" value="1">
+        <!-- Number of Prayers -->
+        <div id="prayers">
+          <h2 id="theme">Number of Prayers</h2>
+          <label class="button-label1" for="prayers-1">1</label>
+          <input
+            type="radio"
+            class="hidden-radio"
+            id="prayers-1"
+            name="prayers"
+            value="1"
+          />
 
-  <label class="button-label1" for="prayers-2">2</label>
-  <input type radio class="hidden-radio" id="prayers-2" name="prayers" value="2">
+          <label class="button-label1" for="prayers-2">2</label>
+          <input
+            type
+            radio
+            class="hidden-radio"
+            id="prayers-2"
+            name="prayers"
+            value="2"
+          />
 
-  <label class="button-label1" for="prayers-3">3</label>
-  <input type="radio" class="hidden-radio" id="prayers-3" name="prayers" value="3">
+          <label class="button-label1" for="prayers-3">3</label>
+          <input
+            type="radio"
+            class="hidden-radio"
+            id="prayers-3"
+            name="prayers"
+            value="3"
+          />
 
-  <label class="button-label1" for="prayers-4">4</label>
-  <input type="radio" class="hidden-radio" id="prayers-4" name="prayers" value="4">
-</div> -->
+          <label class="button-label1" for="prayers-4">4</label>
+          <input
+            type="radio"
+            class="hidden-radio"
+            id="prayers-4"
+            name="prayers"
+            value="4"
+          />
+        </div>
 
-    <!-- Grid Size -->
-    <!-- <div id="grid">
-  <h2 id="theme">Grid Size</h2>
-  <label class="button-label2" for="grid-4x4">4x4</label>
-  <input type="radio" class="hidden-radio" id="grid-4x4" name="grid" value="4x4">
+        <!-- Grid Size -->
+        <div id="grid">
+          <h2 id="theme">Grid Size</h2>
+          <label class="button-label2" for="grid-4x4">4x4</label>
+          <input
+            type="radio"
+            class="hidden-radio"
+            id="grid-4x4"
+            name="grid"
+            value="4x4"
+          />
 
-  <label class="button-label2" for="grid-6x6">6x6</label>
-  <input type="radio" class="hidden-radio" id="grid-6x6" name="grid" value="6x6">
-</div>
+          <label class="button-label2" for="grid-6x6">6x6</label>
+          <input
+            type="radio"
+            class="hidden-radio"
+            id="grid-6x6"
+            name="grid"
+            value="6x6"
+          />
+        </div>
 
         <button id="start">Start Game</button>
       </div>
-    </div> -->
+    </div>
     <div class="solo1">
       <div class="solopanel">
+        <div class="firstpart"></div>
         <div class="top">
           <p id="titlesolo">memory</p>
           <div class="buttons">
@@ -94,11 +144,11 @@
       <p id="poptxt1">Moves Taken</p>
       <p id="poptxt3">0 Moves</p>
     </div>
-   
-
-   
-    <button class="popup-button" id="btn11">Restart</button>
+    <div class="popup-cont">
+      <button class="popup-button" id="btn11">Restart</button>
     <button class="popup-button" id="btn22">Setup New Game</button>
+    </div>
+   
   </div>
 </div>
 
@@ -108,6 +158,7 @@
 
       </div>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>

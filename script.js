@@ -1,3 +1,59 @@
+const themeLabels = document.querySelectorAll('label[for^="theme-"]');
+
+themeLabels.forEach((label) => {
+  label.addEventListener("click", () => {
+    // Remove the "selected" class from all labels
+    themeLabels.forEach((otherLabel) => {
+      otherLabel.classList.remove("selected");
+    });
+    // Add the "selected" class to the clicked label
+    label.classList.add("selected");
+  });
+});
+const prayersLabels = document.querySelectorAll('label[for^="prayers-"]');
+
+prayersLabels.forEach((label) => {
+  label.addEventListener("click", () => {
+    // Remove the "selected" class from all labels
+    prayersLabels.forEach((otherLabel) => {
+      otherLabel.classList.remove("selected");
+    });
+    // Add the "selected" class to the clicked label
+    label.classList.add("selected");
+  });
+});
+const gridSizeLabels = document.querySelectorAll('label[for^="grid-"]');
+
+gridSizeLabels.forEach((label) => {
+  label.addEventListener("click", () => {
+    // Remove the "selected" class from all labels
+    gridSizeLabels.forEach((otherLabel) => {
+      otherLabel.classList.remove("selected");
+    });
+    // Add the "selected" class to the clicked label
+    label.classList.add("selected");
+  });
+});
+
+// Switching from one class to another
+
+const startButton = document.getElementById("start");
+const landingPage = document.querySelector(".landingpage");
+const soloPage = document.querySelector(".solo1");
+
+startButton.addEventListener("click", () => {
+  // Check if the conditions are met
+  const themeNumbers = document.getElementById("theme-numbers").checked;
+  const prayers1 = document.getElementById("prayers-1").checked;
+  const grid4x4 = document.getElementById("grid-4x4").checked;
+
+  if (themeNumbers && prayers1 && grid4x4) {
+    // Conditions met, hide landingpage, show solo1
+    landingPage.classList.add("hidden");
+    soloPage.classList.remove("hidden");
+  }
+});
+
 const grid = document.querySelector(".grid");
 const numbers = [
   "1",
