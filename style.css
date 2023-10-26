@@ -114,19 +114,20 @@ h2 {
 .solo1 {
   height: 100vh;
   background-color: #ffffff;
-
   display: flex;
   justify-content: center;
   font-family: "Atkinson Hyperlegible", sans-serif;
   align-items: center;
 }
 .solopanel {
+  display: flex;
   margin: 0;
-  height: 800px;
-  width: 1100px;
-  background-color: white;
+  height: 48.4rem;
+  width: 69rem;
+  background-color: #ffffff;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 #btn1,
@@ -149,6 +150,7 @@ h2 {
   font-size: 40px;
   color: rgb(0, 0, 0);
   font-weight: 700;
+  margin-bottom: 50px;
 }
 .top {
   width: 100%;
@@ -156,38 +158,6 @@ h2 {
   justify-content: space-between;
 }
 
-/* numbers */
-/* Style for the circular elements */
-.num {
-  /* width: 100%; */
-  margin-top: 100px;
-  background-color: #152938;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-width: 500px;
-  margin: 5rem auto;
-}
-
-.circle {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #304859; /* Default background color, black for hidden numbers */
-  color: transparent; /* Hide the numbers initially */
-  font-size: 24px;
-  font-weight: bold;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.5s;
-}
-/* time and moves */
-/* #time,
-#moves, */
 .display {
   width: 215px;
   height: 72px;
@@ -219,12 +189,14 @@ h1 {
 }
 
 .down {
-  width: 43%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 2.5rem;
 }
 .center {
+  position: relative;
+  margin-top: 2rem;
   width: auto;
   display: flex;
   justify-content: center;
@@ -239,11 +211,12 @@ h1 {
 }
 /* main popup */
 
-.mainpopup {
-  display: none;
-  position: relative;
+#myPopup {
+  /* display: none; */
+  position: absolute;
   top: 0;
   left: 0;
+  /* transform: translate(-50%, -50%); */
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -251,14 +224,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-#myPopup {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  visibility: hidden;
 }
 
 .popup-content {
@@ -353,4 +319,63 @@ h3 {
 }
 .hidden {
   display: none;
+}
+
+/* CSS for hiding the numbers initially */
+.card {
+  width: 118px;
+  height: 118px;
+  background-color: #304859;
+  color: transparent; /* Hide the number */
+  font-size: 44px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  /* Styling on hover (you can customize this) */
+  &:hover {
+    background-color: #6395b8;
+  }
+}
+
+/* CSS for showing the numbers when cards are flipped */
+.card.flip {
+  color: rgb(255, 255, 255); /* Show the number */
+  background-color: #bcced9; /* Modify this to your preferred background color */
+}
+
+/* CSS for hiding the numbers of matched cards */
+.card.matched {
+  color: white; /* Hide the number for matched cards */
+  background-color: #fda214;
+}
+
+/* Styles for the 4x4 grid */
+.grid-4x4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; /* Adjust the gap as needed for 4x4 */
+  max-width: 500px; /* Adjust the max-width for 4x4 */
+}
+
+.grid-4x4 .card {
+  width: 118px; /* Adjust the width for the 4x4 grid cards as needed */
+  height: 118px; /* Adjust the height for the 4x4 grid cards as needed */
+}
+
+/* Styles for the 6x6 grid */
+.grid-6x6 {
+  margin-top: -0.5rem;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px; /* Adjust the gap as needed for 6x6 */
+  max-width: 800px; /* Adjust the max-width for 6x6 */
+}
+
+.grid-6x6 .card {
+  width: 82px; /* Adjust the width for the 6x6 grid cards as needed */
+  height: 82px; /* Adjust the height for the 6x6 grid cards as needed */
 }

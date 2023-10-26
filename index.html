@@ -83,12 +83,10 @@
   <label class="button-label2" for="grid-6x6">6x6</label>
   <input type="radio" class="hidden-radio" id="grid-6x6" name="grid" value="6x6" />
 </div>
-
-
-        <button id="start">Start Game</button>
+<button id="start">Start Game</button>
       </div>
     </div>
-    <div class="solo1 hidden">
+<div class="solo1 hidden">
       <div class="solopanel">
         <div class="firstpart"></div>
         <div class="top">
@@ -96,26 +94,36 @@
           <div class="buttons">
             <button id="btn1">Restart</button>
             <button id="btn2">New Game</button>
-            <button id="btn3">Menu</button>
+            <!-- <button id="btn3">Menu</button> -->
           </div>
         </div>
-        <div class="grid"></div>
+        <div class="grid grid-4x4">
+          <!-- 4x4 grid cards go here -->
+        </div>
+        
+        <div class="grid grid-6x6">
+          <!-- 6x6 grid cards go here -->
+        </div>
+        
+
+        
         <div class="popup">
           <button class="btn1"> Restart</button>
           <button class="btn2">New Game</button>
           <button class="btn3">Resume</button>
 
         </div>
-<div class="center">
-  <div class="down">
-    <div class="display" id="time">
-      <h1>Time:</h1> 
-      <p class="moves-count-1">0:00</p>
-    </div>
-    <div class="display" id="moves">
-      <h1>Moves:</h1>  
-      <p class="moves-count">0</p> 
-    </div>
+        <div class="center">
+          <div class="down">
+            <div class="display" id="time">
+              <h1>Time:</h1> 
+              <p class="moves-count-1">0:00</p>
+            </div>
+            <div class="display" id="moves">
+              <h1>Moves:</h1>  
+              <p class="moves-count">0</p> 
+            </div>
+
 
 
   </div>

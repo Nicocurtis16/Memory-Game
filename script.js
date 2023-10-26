@@ -1,268 +1,217 @@
+// Variables to keep track of game state
+let hasFlippedCard = false;
+let lockBoard = false;
+let firstCard, secondCard;
+let moveCount = 0; // Initialize the move count
+let timerInterval; // Timer interval variable
+let startTime; // Start time for the timer
+let timeStart = false;
+
+// Add event listeners for the cards
+const cards = document.querySelectorAll(".card");
+cards.forEach((card) => card.addEventListener("click", flipCard));
+
+function flipCard() {
+  if (lockBoard) return;
+  if (this === firstCard) return;
+
+  this.classList.add("flip");
+
+  if (!hasFlippedCard) {
+    // Start the timer when the first card is flipped
+    hasFlippedCard = true;
+    firstCard = this;
+    if (!timeStart) {
+      startTimer(); // Start the timer
+      timeStart = true;
+    }
+  } else {
+    // Increment move count and update the display
+    moveCount++;
+    document.querySelector(".moves-count").textContent = moveCount;
+
+    // Second card is flipped
+    secondCard = this;
+
+    checkForMatch();
+  }
+}
+
+function checkForMatch() {
+  if (firstCard.dataset.card === secondCard.dataset.card) {
+    matchCards();
+  } else {
+    unflipCards();
+  }
+}
+const totalPairs = cards.length / 2;
+
+function matchCards() {
+  firstCard.classList.add("matched");
+  secondCard.classList.add("matched");
+
+  // Check if all pairs are matched
+  const matchedCards = document.querySelectorAll(".card.matched");
+  if (matchedCards.length === totalPairs) {
+    // All pairs are matched, stop the timer
+    clearInterval(timerInterval);
+
+    // Show the popup
+    const popup = document.getElementById("myPopup");
+    const popupTitle = document.getElementById("popuptitle");
+    const timeElapsed = document.getElementById("poptxt2");
+    const movesTaken = document.getElementById("poptxt3");
+
+    // Set the time and move count in the popup
+    timeElapsed.textContent =
+      document.querySelector(".moves-count-1").textContent;
+    movesTaken.textContent = `${moveCount} Moves`;
+
+    // Display the popup
+    popup.style.visibility = "visible";
+  }
+
+  resetBoard();
+}
+
+function disableCards() {
+  firstCard.removeEventListener("click", flipCard);
+  secondCard.removeEventListener("click", flipCard);
+
+  resetBoard();
+}
+
+function unflipCards() {
+  lockBoard = true;
+
+  setTimeout(() => {
+    firstCard.classList.remove("flip");
+    secondCard.classList.remove("flip");
+
+    resetBoard();
+  }, 1000);
+}
+
+function resetBoard() {
+  [hasFlippedCard, lockBoard, firstCard, secondCard] = [
+    false,
+    false,
+    null,
+    null,
+  ];
+}
+function startTimer() {
+  startTime = new Date().getTime(); // Record the start time
+  timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
+}
+
+function updateTimer() {
+  const currentTime = new Date().getTime();
+  const elapsedTime = new Date(currentTime - startTime);
+  let minutes = elapsedTime.getUTCMinutes();
+  let seconds = elapsedTime.getUTCSeconds();
+
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+  document.querySelector(
+    ".moves-count-1"
+  ).textContent = `${minutes}:${seconds}`;
+}
+
 // Add event listeners for theme selection, number of prayers, and grid size labels
-
 const themeLabels = document.querySelectorAll('label[for^="theme-"]');
-themeLabels.forEach((label) => {
-  label.addEventListener("click", () => {
-    // Remove the "selected" class from all labels
-    themeLabels.forEach((otherLabel) => {
-      otherLabel.classList.remove("selected");
-    });
-    // Add the "selected" class to the clicked label
-    label.classList.add("selected");
-  });
-});
-
 const prayersLabels = document.querySelectorAll('label[for^="prayers-"]');
-prayersLabels.forEach((label) => {
-  label.addEventListener("click", () => {
-    // Remove the "selected" class from all labels
-    prayersLabels.forEach((otherLabel) => {
-      otherLabel.classList.remove("selected");
-    });
-    // Add the "selected" class to the clicked label
-    label.classList.add("selected");
-  });
-});
-
 const gridSizeLabels = document.querySelectorAll('label[for^="grid-"]');
-gridSizeLabels.forEach((label) => {
-  label.addEventListener("click", () => {
-    // Remove the "selected" class from all labels
-    gridSizeLabels.forEach((otherLabel) => {
-      otherLabel.classList.remove("selected");
-    });
-    // Add the "selected" class to the clicked label
-    label.classList.add("selected");
-  });
-});
-
-// Define variables for various elements
-
 const startButton = document.getElementById("start");
 const landingPage = document.querySelector(".landingpage");
 const soloPage = document.querySelector(".solo1");
-const popup = document.getElementById("myPopup");
-const restartButton = document.getElementById("btn11");
-const setupNewGameButton = document.getElementById("btn22");
+const grid4x4 = document.querySelector(".grid-4x4");
+const grid6x6 = document.querySelector(".grid-6x6");
 
-const grid = document.querySelector(".grid");
-const numbers = [
-  "1",
-  "1",
-  "2",
-  "2",
-  "3",
-  "3",
-  "4",
-  "4",
-  "5",
-  "5",
-  "6",
-  "6",
-  "7",
-  "7",
-  "8",
-  "8",
-];
-let shuffledNumbers = shuffleArray(numbers);
-
-const timeCountText = document.querySelector(".moves-count-1");
-const movesCountText = document.querySelector(".moves-count");
-const popupTitle = document.getElementById("popuptitle");
-const popupTimeText = document.getElementById("poptxt2");
-const popupMovesText = document.getElementById("poptxt3");
-
-let startTime = 0;
-let timerInterval;
-let moves = 0;
-let pairs = 0;
-
-// Create the grid dynamically
-
-shuffledNumbers.forEach((number) => {
-  const circle = document.createElement("div");
-  circle.classList.add("circle");
-  circle.textContent = number;
-  circle.dataset.matched = "false"; // To keep track of matched pairs
-
-  circle.addEventListener("click", () => {
-    if (circle.dataset.matched === "false") {
-      circle.style.backgroundColor = "#BCCED9"; // Set background color to green when selected
-      circle.style.color = "#F2F2F2"; // Show the number
-      circle.dataset.matched = "true";
-      checkForMatch();
-      moves++;
-      movesCountText.textContent = Math.floor(moves / 2);
-
-      if (moves === 1) {
-        startTime = new Date().getTime(); // Start counting time after the first move
-        timerInterval = setInterval(updateTime, 1000);
-      }
-    }
+themeLabels.forEach((label) => {
+  label.addEventListener("click", () => {
+    themeLabels.forEach((otherLabel) => {
+      otherLabel.classList.remove("selected");
+    });
+    label.classList.add("selected");
   });
-
-  grid.appendChild(circle);
 });
 
-// Define variables to keep track of selected circles
-let firstSelection = null;
-let secondSelection = null;
+prayersLabels.forEach((label) => {
+  label.addEventListener("click", () => {
+    prayersLabels.forEach((otherLabel) => {
+      otherLabel.classList.remove("selected");
+    });
+    label.classList.add("selected");
+  });
+});
 
-// Function to check for matching pairs
-function checkForMatch() {
-  const selectedCircles = Array.from(
-    document.querySelectorAll('.circle[data-matched="true"]')
+gridSizeLabels.forEach((label) => {
+  label.addEventListener("click", () => {
+    gridSizeLabels.forEach((otherLabel) => {
+      otherLabel.classList.remove("selected");
+    });
+    label.classList.add("selected");
+
+    const selectedGridSize = label.innerText;
+
+    if (selectedGridSize === "4x4") {
+      grid4x4.style.display = "grid";
+      grid6x6.style.display = "none";
+      generateGrid(grid4x4, 4); // Generate and populate the 4x4 grid
+    } else if (selectedGridSize === "6x6") {
+      grid4x4.style.display = "none";
+      grid6x6.style.display = "grid";
+      generateGrid(grid6x6, 6); // Generate and populate the 6x6 grid
+    }
+  });
+});
+
+function generateGrid(grid, gridSize) {
+  grid.innerHTML = "";
+
+  const totalPairs = (gridSize * gridSize) / 2;
+  const numbers = Array.from({ length: totalPairs }, (_, index) => index + 1);
+  const pairs = [...numbers, ...numbers];
+
+  // Shuffle the pairs to randomize their positions in the grid
+  for (let i = pairs.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+  }
+
+  for (let i = 0; i < gridSize * gridSize; i++) {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.textContent = pairs[i];
+    card.setAttribute("data-card", pairs[i]);
+    grid.appendChild(card);
+
+    card.addEventListener("click", flipCard);
+  }
+}
+
+// Shuffle the cards when the page loads
+(function shuffle() {
+  cards.forEach((card) => {
+    let randomPos = Math.floor(Math.random() * cards.length);
+    card.style.order = randomPos;
+  });
+})();
+
+// Add start button click event listener
+startButton.addEventListener("click", () => {
+  const selectedGridSizeLabel = document.querySelector(
+    'label[for^="grid-"].selected'
   );
 
-  if (selectedCircles.length === shuffledNumbers.length) {
-    clearInterval(timerInterval); // Stop the timer
-    displayPopup();
-  } else if (selectedCircles.length === 2) {
-    const [circle1, circle2] = selectedCircles;
-    if (circle1.textContent === circle2.textContent) {
-      // You have a match, set background color to a different color to indicate a matched pair
-      circle1.style.backgroundColor = "#FDA214";
-      circle2.style.backgroundColor = "#FDA214";
-      circle1.dataset.matched = "matched";
-      circle2.dataset.matched = "matched";
-      pairs++;
-    } else {
-      // They do not match, flip them back
-      setTimeout(() => {
-        circle1.style.backgroundColor = "#304859"; // Set background color back to the default
-        circle2.style.backgroundColor = "#304859";
-        circle1.style.color = "transparent"; // Hide the numbers
-        circle2.style.color = "transparent";
-        circle1.dataset.matched = "false";
-        circle2.dataset.matched = "false";
-      }, 1000); // Flip back after 1 second
-    }
+  if (selectedGridSizeLabel) {
+    const selectedGridSize = selectedGridSizeLabel.innerText;
+    const gridSize = parseInt(selectedGridSize);
+
+    generateGrid(gridSize);
   }
-}
 
-// Function to update the elapsed time
-function updateTime() {
-  const currentTime = new Date().getTime();
-  const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
-  const minutes = Math.floor(elapsedSeconds / 60);
-  const seconds = elapsedSeconds % 60;
-  timeCountText.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-}
-
-// Function to shuffle an array
-function shuffleArray(array) {
-  const shuffledArray = array.slice();
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-  }
-  return shuffledArray;
-}
-
-// Function to display the game completion popup
-function displayPopup() {
-  popupTitle.textContent = "You did it!";
-  popupTimeText.textContent = timeCountText.textContent;
-  popupMovesText.textContent = movesCountText.textContent + " Moves";
-  popup.style.display = "block";
-}
-
-// Event listener for the "Restart" button in the popup
-restartButton.addEventListener("click", () => {
-  // Clear the grid
-  grid.innerHTML = "";
-
-  // Reset game variables
-  moves = 0;
-  pairs = 0;
-  startTime = 0;
-  clearInterval(timerInterval);
-  timeCountText.textContent = "0:00";
-  movesCountText.textContent = "0";
-
-  // Re-shuffle numbers and re-create the grid
-  shuffledNumbers = shuffleArray(numbers);
-  shuffledNumbers.forEach((number) => {
-    const circle = document.createElement("div");
-    circle.classList.add("circle");
-    circle.textContent = number;
-    circle.dataset.matched = "false";
-    circle.addEventListener("click", () => {
-      if (circle.dataset.matched === "false") {
-        circle.style.backgroundColor = "#BCCED9";
-        circle.style.color = "#F2F2F2";
-        circle.dataset.matched = "true";
-        checkForMatch();
-        moves++;
-        movesCountText.textContent = Math.floor(moves / 2);
-        if (moves === 1) {
-          startTime = new Date().getTime();
-          timerInterval = setInterval(updateTime, 1000);
-        }
-      }
-    });
-    grid.appendChild(circle);
-  });
-
-  // Hide the popup
-  popup.style.display = "none";
-});
-
-// Event listener for the "Setup New Game" button in the popup
-setupNewGameButton.addEventListener("click", () => {
-  // Clear the grid
-  grid.innerHTML = "";
-
-  // Reset game variables
-  moves = 0;
-  pairs = 0;
-  startTime = 0;
-  clearInterval(timerInterval);
-  timeCountText.textContent = "0:00";
-  movesCountText.textContent = "0";
-
-  // Re-shuffle numbers and re-create the grid
-  shuffledNumbers = shuffleArray(numbers);
-  shuffledNumbers.forEach((number) => {
-    const circle = document.createElement("div");
-    circle.classList.add("circle");
-    circle.textContent = number;
-    circle.dataset.matched = "false";
-    circle.addEventListener("click", () => {
-      if (circle.dataset.matched === "false") {
-        circle.style.backgroundColor = "#BCCED9";
-        circle.style.color = "#F2F2F2";
-        circle.dataset.matched = "true";
-        checkForMatch();
-        moves++;
-        movesCountText.textContent = Math.floor(moves / 2);
-        if (moves === 1) {
-          startTime = new Date().getTime();
-          timerInterval = setInterval(updateTime, 1000);
-        }
-      }
-    });
-    grid.appendChild(circle);
-  });
-
-  // Hide the popup
-  popup.style.display = "none";
-
-  // Hide the current class (solo1) and show the landing page
-  landingPage.classList.remove("hidden");
-  soloPage.classList.add("hidden");
-});
-
-// Event listener for the "Start Game" button on the landing page
-startButton.addEventListener("click", () => {
-  // Check if the conditions are met
-  const themeNumbers = document.getElementById("theme-numbers").checked;
-  const prayers1 = document.getElementById("prayers-1").checked;
-  const grid4x4 = document.getElementById("grid-4x4").checked;
-
-  if (themeNumbers && prayers1 && grid4x4) {
-    // Conditions met, hide landing page, show solo1
-    landingPage.classList.add("hidden");
-    soloPage.classList.remove("hidden");
-  }
+  landingPage.style.display = "none";
+  soloPage.classList.remove("hidden");
 });
