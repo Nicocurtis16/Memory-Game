@@ -159,15 +159,22 @@ h2 {
 }
 
 .display {
-  width: 215px;
-  height: 72px;
-  background-color: #dfe7ec;
-  border-radius: 10px;
-
-  line-height: 72px;
-  padding: 0.5rem;
+  width: 210px;
   justify-content: space-between;
   display: flex;
+  height: 72px;
+  align-items: center;
+  margin-left: 21px;
+  background-color: #dfe7ec;
+}
+.dowat {
+  width: 210px;
+  justify-content: space-between;
+  display: flex;
+  height: 72px;
+  align-items: center;
+  margin-left: 21px;
+  background-color: #dfe7ec;
 }
 h1 {
   color: #7191a5;
@@ -209,7 +216,7 @@ h1 {
 .btn3 {
   visibility: hidden;
 }
-/* main popup */
+/*  popup */
 
 #myPopup {
   /* display: none; */
@@ -356,9 +363,11 @@ h3 {
 /* Styles for the 4x4 grid */
 .grid-4x4 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px; /* Adjust the gap as needed for 4x4 */
-  max-width: 500px; /* Adjust the max-width for 4x4 */
+  grid-template-columns: repeat(4, 1fr); /* Create 4 equal-width columns */
+  grid-template-rows: repeat(4, 1fr); /* Create 4 equal-height rows */
+  gap: 20px; /* Adjust the gap size between cards */
+
+  max-width: 500px;
 }
 
 .grid-4x4 .card {

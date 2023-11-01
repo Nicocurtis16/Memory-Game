@@ -20,12 +20,16 @@
 
   /* Styles for screens within the tablet range (between 768px and 1024px) */
   @media (min-width: 310px) and (max-width: 750px) {
-    #title {
+    /* #title {
       padding-top: 4rem;
       padding-bottom: 3rem;
       font-weight: 700;
       font-size: 40px;
       color: white;
+    } */
+    .body {
+      height: 100vh;
+      width: 100%;
     }
     .panel {
       height: 386px;
@@ -38,7 +42,7 @@
     #theme {
       font-size: 15px;
     }
-    .button-label {
+    .dowae .button-label {
       height: 40px;
       width: 134px;
       font-size: 16px;
@@ -48,6 +52,14 @@
     #prayers {
       margin-top: 1rem;
       margin-left: 1.2rem;
+    }
+    .button-label {
+      height: 40px;
+      width: 134px;
+      font-size: 16px;
+      font-weight: 700;
+      margin-right: 1rem;
+      line-height: 40px;
     }
     .button-label1 {
       height: 40px;
@@ -82,14 +94,6 @@
 }
 
 @media (min-width: 320px) and (max-width: 750px) {
-  .solopanel {
-    width: 327px;
-    height: 619px;
-  }
-  .top {
-    width: 100%;
-    height: 100%;
-  }
   #btn1,
   #btn2 {
     display: none;
@@ -110,30 +114,7 @@
   #titlesolo {
     font-size: 24;
   }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 500px; /* Adjust this to fit your design */
-    margin: 1rem auto;
-    margin-top: -500px;
-    margin-bottom: 100px;
-  }
 
-  .circle {
-    width: 70px;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #304859; /* Default background color, black for hidden numbers */
-    color: transparent; /* Hide the numbers initially */
-    font-size: 24px;
-    font-weight: bold;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.5s;
-  }
   .down {
     width: 100%;
     display: flex;
@@ -146,45 +127,106 @@
   .moves-count-1 {
     font-size: 24px;
     color: #304859;
-    background-color: red;
-    margin-top: 500px;
   }
-  #time,
-  #moves {
-    width: 100px;
+  .display {
+    width: 150px;
     height: 70px;
-    background-color: #dfe7ec;
-    border-radius: 10px;
-    color: #7191a5;
-    font-weight: 700;
-    font-size: 15px;
-    align-items: center;
+
+    /* justify-content: space-between; */
+    display: block;
+    /* flex-direction: column; */
   }
-  .popup {
-    width: 327px;
-    height: 224px;
+
+  .display h1 {
+    background-color: red;
+  }
+}
+
+@media (min-width: 310px) and (max-width: 750px) {
+  .grid-4x4 .card {
+    width: 72.53px; /* Adjust the width for the 4x4 grid cards as needed */
+    height: 72.53px; /* Adjust the height for the 4x4 grid cards as needed */
+  }
+
+  .grid-6x6 .card {
+    width: 82px; /* Adjust the width for the 6x6 grid cards as needed */
+    height: 82px; /* Adjust the height for the 6x6 grid cards as needed */
+  }
+
+  .popup-content {
     background-color: white;
-    border-radius: 10px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     text-align: center;
-    display: none; /* Initially hidden */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    /* box-shadow: 0px 0px 10px 0px #000; */
+    width: 327px;
+    height: 378px;
+    border-radius: 20px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+  #btn11,
+  #btn22 {
+    width: 279px;
+    height: 48px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .popupdisplay {
+    background-color: #dfe7ec;
+    width: 279px;
+    height: 48px;
+    border-radius: 10px;
+    margin-top: 15px;
+    /* margin-left: 50px; */
+    line-height: 48px;
+    display: flex;
+    justify-content: space-between;
+  }
+  #myPopup {
+    /* display: none; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* transform: translate(-50%, -50%); */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+  }
+  #popuptitle {
+    margin-top: 40px;
+    font-size: 24px;
+    color: #152938;
+    margin-bottom: 15px;
   }
 
-  .btn1,
-  .btn2,
-  .btn3 {
-    border: 0;
-
-    border-radius: 26px;
-    margin: 10px;
+  #poptxt2,
+  #poptxt3 {
+    font-size: 20px;
+  }
+  #size {
+    font-size: 14px;
+    margin-bottom: -1px;
+  }
+  #popuptitle {
+    margin-top: 1rem;
+  }
+  .popup-cont {
     display: flex;
-    font-size: 18px;
-    font-weight: 700;
-    color: #304859;
-    background-color: #dfe7ec;
-    text-align: center;
+    width: 85%;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 10px;
+
+    margin-top: 1.5rem;
   }
 }

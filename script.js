@@ -6,10 +6,27 @@ let moveCount = 0; // Initialize the move count
 let timerInterval; // Timer interval variable
 let startTime; // Start time for the timer
 let timeStart = false;
+let currentTheme = "icons"; // Default theme is icons
 
 // Add event listeners for the cards
 const cards = document.querySelectorAll(".card");
 cards.forEach((card) => card.addEventListener("click", flipCard));
+
+// Add event listener for the theme radio buttons
+const themeNumbersRadio = document.querySelector("#theme-numbers");
+const themeIconsRadio = document.querySelector("#theme-icons");
+
+themeNumbersRadio.addEventListener("change", () => {
+  currentTheme = "numbers";
+  generateGrid(grid4x4, 4); // Regenerate the 4x4 grid based on the current theme
+  generateGrid(grid6x6, 6); // Regenerate the 6x6 grid based on the current theme
+});
+
+themeIconsRadio.addEventListener("change", () => {
+  currentTheme = "icons";
+  generateGrid(grid4x4, 4); // Regenerate the 4x4 grid based on the current theme
+  generateGrid(grid6x6, 6); // Regenerate the 6x6 grid based on the current theme
+});
 
 function flipCard() {
   if (lockBoard) return;
@@ -44,34 +61,45 @@ function checkForMatch() {
     unflipCards();
   }
 }
+
 const totalPairs = cards.length / 2;
 
 function matchCards() {
+  console.log("Matching cards function");
   firstCard.classList.add("matched");
   secondCard.classList.add("matched");
 
   // Check if all pairs are matched
   const matchedCards = document.querySelectorAll(".card.matched");
+  console.log("Matched cards count:", matchedCards.length);
+
   if (matchedCards.length === totalPairs) {
     // All pairs are matched, stop the timer
     clearInterval(timerInterval);
-
-    // Show the popup
-    const popup = document.getElementById("myPopup");
-    const popupTitle = document.getElementById("popuptitle");
-    const timeElapsed = document.getElementById("poptxt2");
-    const movesTaken = document.getElementById("poptxt3");
-
-    // Set the time and move count in the popup
-    timeElapsed.textContent =
-      document.querySelector(".moves-count-1").textContent;
-    movesTaken.textContent = `${moveCount} Moves`;
-
-    // Display the popup
-    popup.style.visibility = "visible";
+    console.log("Timer stopped");
   }
 
   resetBoard();
+
+  // Show the popup after resetting the board
+  const popup = document.getElementById("myPopup");
+  const popupTitle = document.getElementById("popuptitle");
+  const timeElapsed = document.getElementById("poptxt2");
+  const movesTaken = document.getElementById("poptxt3");
+
+  // Set the time and move count in the popup
+  timeElapsed.textContent =
+    document.querySelector(".moves-count-1").textContent;
+  movesTaken.textContent = `${moveCount} Moves`;
+
+  // Display the popup
+  popup.style.visibility = "visible";
+
+  // Check if the game is completed and do something
+  if (matchedCards.length === cards.length) {
+    // The game is completed. You can add your code here.
+    // For example, display a message, play a sound, etc.
+  }
 }
 
 function disableCards() {
@@ -100,6 +128,7 @@ function resetBoard() {
     null,
   ];
 }
+
 function startTimer() {
   startTime = new Date().getTime(); // Record the start time
   timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
@@ -171,26 +200,67 @@ function generateGrid(grid, gridSize) {
   grid.innerHTML = "";
 
   const totalPairs = (gridSize * gridSize) / 2;
-  const numbers = Array.from({ length: totalPairs }, (_, index) => index + 1);
-  const pairs = [...numbers, ...numbers];
+  let icons;
 
-  // Shuffle the pairs to randomize their positions in the grid
-  for (let i = pairs.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+  if (currentTheme === "numbers") {
+    // Generate numbers from 1 to totalPairs
+    icons = Array.from({ length: totalPairs }, (_, index) => index + 1);
+  } else {
+    // Create an array of Font Awesome icons you want to use
+    icons = [
+      "fa-heart",
+      "fa-star",
+      "fa-bolt",
+      "fa-smile",
+      "fa-flag",
+      "fa-bell",
+      "fa-gem",
+      "fa-moon",
+      "fa-plane",
+      "fa-key",
+      "fa-sun",
+      "fa-cloud",
+      "fa-tree",
+      "fa-apple",
+      "fa-car",
+      "fa-anchor",
+      "fa-coffee",
+      "fa-camera",
+    ];
   }
+
+  // Shuffle the icons to randomize their positions in the grid
+  shuffleArray(icons);
+
+  const pairs = icons.slice(0, totalPairs);
+  const cardElements = [];
 
   for (let i = 0; i < gridSize * gridSize; i++) {
     const card = document.createElement("div");
     card.classList.add("card");
-    card.textContent = pairs[i];
-    card.setAttribute("data-card", pairs[i]);
-    grid.appendChild(card);
 
-    card.addEventListener("click", flipCard);
+    // Create an icon element and add the Font Awesome class to it
+    const icon = document.createElement("i");
+    if (currentTheme === "numbers") {
+      icon.textContent = pairs[i % totalPairs];
+    } else {
+      icon.classList.add("fas", pairs[i % totalPairs]);
+    }
+
+    card.appendChild(icon);
+    card.setAttribute("data-card", pairs[i % totalPairs]);
+
+    cardElements.push(card);
   }
-}
 
+  // Shuffle the card elements to randomize their positions in the grid
+  shuffleArray(cardElements);
+
+  cardElements.forEach((card) => {
+    grid.appendChild(card);
+    card.addEventListener("click", flipCard);
+  });
+}
 // Shuffle the cards when the page loads
 (function shuffle() {
   cards.forEach((card) => {
@@ -204,14 +274,27 @@ startButton.addEventListener("click", () => {
   const selectedGridSizeLabel = document.querySelector(
     'label[for^="grid-"].selected'
   );
+  const selectedPrayers = document.querySelector(
+    'input[name="prayers"]:checked'
+  );
 
   if (selectedGridSizeLabel) {
-    const selectedGridSize = selectedGridSizeLabel.innerText;
-    const gridSize = parseInt(selectedGridSize);
+    const selectedGridSize = parseInt(selectedGridSizeLabel.innerText);
+    generateGrid(selectedGridSize);
+  }
 
-    generateGrid(gridSize);
+  if (selectedPrayers) {
+    const prayers = selectedPrayers.value;
+    // Use the selected number of prayers in your game logic
   }
 
   landingPage.style.display = "none";
   soloPage.classList.remove("hidden");
 });
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
