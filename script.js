@@ -29,6 +29,8 @@ themeIconsRadio.addEventListener("change", () => {
 });
 
 function flipCard() {
+  console.log("Flip card function called"); // Add this line
+
   if (lockBoard) return;
   if (this === firstCard) return;
 
@@ -49,12 +51,18 @@ function flipCard() {
 
     // Second card is flipped
     secondCard = this;
-
     checkForMatch();
+
+    if (allCardsAreFlipped()) {
+      clearInterval(timerInterval);
+      popup(moveCount);
+    }
   }
 }
 
 function checkForMatch() {
+  console.log("CheckMated card function called"); // Add this line
+
   if (firstCard.dataset.card === secondCard.dataset.card) {
     matchCards();
   } else {
@@ -75,13 +83,19 @@ function matchCards() {
 
   if (matchedCards.length === totalPairs) {
     // All pairs are matched, stop the timer
-    clearInterval(timerInterval);
     console.log("Timer stopped");
   }
 
   resetBoard();
 
-  // Show the popup after resetting the board
+  // Check if the game is completed and do something
+  if (matchedCards.length === cards.length) {
+    // Show the popup after resetting the board
+    // The game is completed. You can add your code here.
+    // For example, display a message, play a sound, etc.
+  }
+}
+function popup(moveCount) {
   const popup = document.getElementById("myPopup");
   const popupTitle = document.getElementById("popuptitle");
   const timeElapsed = document.getElementById("poptxt2");
@@ -90,16 +104,10 @@ function matchCards() {
   // Set the time and move count in the popup
   timeElapsed.textContent =
     document.querySelector(".moves-count-1").textContent;
-  movesTaken.textContent = `${moveCount} Moves`;
+  movesTaken.textContent = `${moveCount} Moves`; // Display the moveCount
 
   // Display the popup
   popup.style.visibility = "visible";
-
-  // Check if the game is completed and do something
-  if (matchedCards.length === cards.length) {
-    // The game is completed. You can add your code here.
-    // For example, display a message, play a sound, etc.
-  }
 }
 
 function disableCards() {
@@ -127,6 +135,16 @@ function resetBoard() {
     null,
     null,
   ];
+}
+
+function allCardsAreFlipped() {
+  const cards = document.querySelectorAll(".card");
+  for (const card of cards) {
+    if (!card.classList.contains("matched")) {
+      return false;
+    }
+  }
+  return true;
 }
 
 function startTimer() {
@@ -182,13 +200,13 @@ gridSizeLabels.forEach((label) => {
     });
     label.classList.add("selected");
 
-    const selectedGridSize = label.innerText;
+    const selectedGridSizeLabel = label.innerText;
 
-    if (selectedGridSize === "4x4") {
+    if (selectedGridSizeLabel === "4x4") {
       grid4x4.style.display = "grid";
       grid6x6.style.display = "none";
       generateGrid(grid4x4, 4); // Generate and populate the 4x4 grid
-    } else if (selectedGridSize === "6x6") {
+    } else if (selectedGridSizeLabel === "6x6") {
       grid4x4.style.display = "none";
       grid6x6.style.display = "grid";
       generateGrid(grid6x6, 6); // Generate and populate the 6x6 grid
@@ -261,6 +279,7 @@ function generateGrid(grid, gridSize) {
     card.addEventListener("click", flipCard);
   });
 }
+
 // Shuffle the cards when the page loads
 (function shuffle() {
   cards.forEach((card) => {
@@ -298,3 +317,138 @@ function shuffleArray(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
+
+// Add event listeners for the "Reset" button (btn11) and "btn2"
+const resetButton = document.getElementById("btn11");
+const backToLandingPageButton = document.getElementById("btn2");
+
+resetButton.addEventListener("click", () => {
+  // Reset the game to its initial state
+  moveCount = 0;
+  document.querySelector(".moves-count").textContent = moveCount;
+  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
+
+  // Stop the timer if it's running
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  // Flip back any flipped cards
+  cards.forEach((card) => {
+    card.classList.remove("flip", "matched");
+  });
+
+  // Shuffle the cards
+  (function shuffle() {
+    cards.forEach((card) => {
+      let randomPos = Math.floor(Math.random() * cards.length);
+      card.style.order = randomPos;
+    });
+  });
+});
+
+backToLandingPageButton.addEventListener("click", () => {
+  // Return to the landing page
+  landingPage.style.display = "flex";
+  soloPage.classList.add("hidden");
+});
+btn1.addEventListener("click", () => {
+  // Reset the game to its initial state
+  moveCount = 0;
+  document.querySelector(".moves-count").textContent = moveCount;
+  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
+
+  // Stop the timer if it's running
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  // Flip back any flipped cards
+  cards.forEach((card) => {
+    card.classList.remove("flip", "matched");
+  });
+
+  // Shuffle the cards
+  (function shuffle() {
+    cards.forEach((card) => {
+      let randomPos = Math.floor(Math.random() * cards.length);
+      card.style.order = randomPos;
+    });
+  });
+
+  // Hide the popup
+  const popup = document.getElementById("myPopup");
+  popup.style.visibility = "hidden";
+});
+
+btn11.addEventListener("click", () => {
+  const popup = document.getElementById("myPopup");
+  popup.style.visibility = "hidden";
+
+  // Reset the game to its initial state
+  moveCount = 0;
+  document.querySelector(".moves-count").textContent = moveCount;
+  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
+
+  // Stop the timer if it's running
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  // Flip back any flipped cards
+  cards.forEach((card) => {
+    card.classList.remove("flip", "matched");
+  });
+
+  // Shuffle the cards
+  (function shuffle() {
+    cards.forEach((card) => {
+      let randomPos = Math.floor(Math.random() * cards.length);
+      card.style.order = randomPos;
+    });
+  });
+
+  // Reset the grid, preserving its state
+  const gridSizeLabel = document.querySelector('label[for^="grid-"].selected');
+  if (gridSizeLabel) {
+    const selectedGridSize = gridSizeLabel.innerText;
+    const grid = selectedGridSize === "4x4" ? grid4x4 : grid6x6;
+    generateGrid(grid, parseInt(selectedGridSize));
+  }
+
+  // Show the "solo" page
+  soloPage.classList.remove("hidden");
+});
+const btn22 = document.getElementById("btn22");
+
+btn22.addEventListener("click", () => {
+  const popup = document.getElementById("myPopup");
+  popup.style.visibility = "hidden";
+
+  // Reset the game to its initial state
+  moveCount = 0;
+  document.querySelector(".moves-count").textContent = moveCount;
+  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
+
+  // Stop the timer if it's running
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  // Flip back any flipped cards
+  cards.forEach((card) => {
+    card.classList.remove("flip", "matched");
+  });
+
+  // Shuffle the cards
+  (function shuffle() {
+    cards.forEach((card) => {
+      let randomPos = Math.floor(Math.random() * cards.length);
+      card.style.order = randomPos;
+    });
+  });
+
+  // Hide the "solo" page and show the landing page
+  landingPage.style.display = "block";
+  soloPage.classList.add("hidden");
+});
