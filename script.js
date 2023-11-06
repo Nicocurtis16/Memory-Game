@@ -95,6 +95,7 @@ function matchCards() {
     // For example, display a message, play a sound, etc.
   }
 }
+
 function popup(moveCount) {
   const popup = document.getElementById("myPopup");
   const popupTitle = document.getElementById("popuptitle");
@@ -174,6 +175,9 @@ const landingPage = document.querySelector(".landingpage");
 const soloPage = document.querySelector(".solo1");
 const grid4x4 = document.querySelector(".grid-4x4");
 const grid6x6 = document.querySelector(".grid-6x6");
+const mutipleprayerContainer = document.querySelector(
+  ".mutipleprayer-container"
+); // Container for "mutipleprayer" sections
 
 themeLabels.forEach((label) => {
   label.addEventListener("click", () => {
@@ -187,7 +191,7 @@ themeLabels.forEach((label) => {
 prayersLabels.forEach((label) => {
   label.addEventListener("click", () => {
     prayersLabels.forEach((otherLabel) => {
-      otherLabel.classList.remove("selected");
+      otherLabel.classListremove("selected");
     });
     label.classList.add("selected");
   });
@@ -199,256 +203,35 @@ gridSizeLabels.forEach((label) => {
       otherLabel.classList.remove("selected");
     });
     label.classList.add("selected");
-
-    const selectedGridSizeLabel = label.innerText;
-
-    if (selectedGridSizeLabel === "4x4") {
-      grid4x4.style.display = "grid";
-      grid6x6.style.display = "none";
-      generateGrid(grid4x4, 4); // Generate and populate the 4x4 grid
-    } else if (selectedGridSizeLabel === "6x6") {
-      grid4x4.style.display = "none";
-      grid6x6.style.display = "grid";
-      generateGrid(grid6x6, 6); // Generate and populate the 6x6 grid
-    }
   });
 });
 
-function generateGrid(grid, gridSize) {
-  grid.innerHTML = "";
+startButton.addEventListener("click", () => {
+  const selectedTheme = document.querySelector('input[name="theme"]:checked');
+  const selectedPrayers = document.querySelector(
+    'input[name="prayers"]:checked'
+  );
+  const selectedGridSize = document.querySelector('input[name="grid"]:checked');
 
-  const totalPairs = (gridSize * gridSize) / 2;
-  let icons;
-
-  if (currentTheme === "numbers") {
-    // Generate numbers from 1 to totalPairs
-    icons = Array.from({ length: totalPairs }, (_, index) => index + 1);
+  if (
+    selectedTheme &&
+    selectedPrayers &&
+    selectedGridSize &&
+    (parseInt(selectedPrayers.value) > 1 || selectedTheme.value === "Numbers")
+  ) {
+    // Check if the selected theme is "Numbers" or more than 1 prayer is selected
+    generateGrid(selectedGridSize.value);
+    landingPage.style.display = "none";
+    soloPage.classList.remove("hidden");
+    mutipleprayerContainer.style.display = "block"; // Display the ".mutipleprayer" sections
   } else {
-    // Create an array of Font Awesome icons you want to use
-    icons = [
-      "fa-heart",
-      "fa-star",
-      "fa-bolt",
-      "fa-smile",
-      "fa-flag",
-      "fa-bell",
-      "fa-gem",
-      "fa-moon",
-      "fa-plane",
-      "fa-key",
-      "fa-sun",
-      "fa-cloud",
-      "fa-tree",
-      "fa-apple",
-      "fa-car",
-      "fa-anchor",
-      "fa-coffee",
-      "fa-camera",
-    ];
+    // Show an error message or handle the case where the conditions are not met
+    // For example: alert("Please select appropriate options.");
   }
-
-  // Shuffle the icons to randomize their positions in the grid
-  shuffleArray(icons);
-
-  const pairs = icons.slice(0, totalPairs);
-  const cardElements = [];
-
-  for (let i = 0; i < gridSize * gridSize; i++) {
-    const card = document.createElement("div");
-    card.classList.add("card");
-
-    // Create an icon element and add the Font Awesome class to it
-    const icon = document.createElement("i");
-    if (currentTheme === "numbers") {
-      icon.textContent = pairs[i % totalPairs];
-    } else {
-      icon.classList.add("fas", pairs[i % totalPairs]);
-    }
-
-    card.appendChild(icon);
-    card.setAttribute("data-card", pairs[i % totalPairs]);
-
-    cardElements.push(card);
-  }
-
-  // Shuffle the card elements to randomize their positions in the grid
-  shuffleArray(cardElements);
-
-  cardElements.forEach((card) => {
-    grid.appendChild(card);
-    card.addEventListener("click", flipCard);
-  });
-}
-
-// Shuffle the cards when the page loads
+});
 (function shuffle() {
   cards.forEach((card) => {
     let randomPos = Math.floor(Math.random() * cards.length);
     card.style.order = randomPos;
   });
 })();
-
-// Add start button click event listener
-startButton.addEventListener("click", () => {
-  const selectedGridSizeLabel = document.querySelector(
-    'label[for^="grid-"].selected'
-  );
-  const selectedPrayers = document.querySelector(
-    'input[name="prayers"]:checked'
-  );
-
-  if (selectedGridSizeLabel) {
-    const selectedGridSize = parseInt(selectedGridSizeLabel.innerText);
-    generateGrid(selectedGridSize);
-  }
-
-  if (selectedPrayers) {
-    const prayers = selectedPrayers.value;
-    // Use the selected number of prayers in your game logic
-  }
-
-  landingPage.style.display = "none";
-  soloPage.classList.remove("hidden");
-});
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-
-// Add event listeners for the "Reset" button (btn11) and "btn2"
-const resetButton = document.getElementById("btn11");
-const backToLandingPageButton = document.getElementById("btn2");
-
-resetButton.addEventListener("click", () => {
-  // Reset the game to its initial state
-  moveCount = 0;
-  document.querySelector(".moves-count").textContent = moveCount;
-  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
-
-  // Stop the timer if it's running
-  if (timerInterval) {
-    clearInterval(timerInterval);
-  }
-
-  // Flip back any flipped cards
-  cards.forEach((card) => {
-    card.classList.remove("flip", "matched");
-  });
-
-  // Shuffle the cards
-  (function shuffle() {
-    cards.forEach((card) => {
-      let randomPos = Math.floor(Math.random() * cards.length);
-      card.style.order = randomPos;
-    });
-  });
-});
-
-backToLandingPageButton.addEventListener("click", () => {
-  // Return to the landing page
-  landingPage.style.display = "flex";
-  soloPage.classList.add("hidden");
-});
-btn1.addEventListener("click", () => {
-  // Reset the game to its initial state
-  moveCount = 0;
-  document.querySelector(".moves-count").textContent = moveCount;
-  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
-
-  // Stop the timer if it's running
-  if (timerInterval) {
-    clearInterval(timerInterval);
-  }
-
-  // Flip back any flipped cards
-  cards.forEach((card) => {
-    card.classList.remove("flip", "matched");
-  });
-
-  // Shuffle the cards
-  (function shuffle() {
-    cards.forEach((card) => {
-      let randomPos = Math.floor(Math.random() * cards.length);
-      card.style.order = randomPos;
-    });
-  });
-
-  // Hide the popup
-  const popup = document.getElementById("myPopup");
-  popup.style.visibility = "hidden";
-});
-
-btn11.addEventListener("click", () => {
-  const popup = document.getElementById("myPopup");
-  popup.style.visibility = "hidden";
-
-  // Reset the game to its initial state
-  moveCount = 0;
-  document.querySelector(".moves-count").textContent = moveCount;
-  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
-
-  // Stop the timer if it's running
-  if (timerInterval) {
-    clearInterval(timerInterval);
-  }
-
-  // Flip back any flipped cards
-  cards.forEach((card) => {
-    card.classList.remove("flip", "matched");
-  });
-
-  // Shuffle the cards
-  (function shuffle() {
-    cards.forEach((card) => {
-      let randomPos = Math.floor(Math.random() * cards.length);
-      card.style.order = randomPos;
-    });
-  });
-
-  // Reset the grid, preserving its state
-  const gridSizeLabel = document.querySelector('label[for^="grid-"].selected');
-  if (gridSizeLabel) {
-    const selectedGridSize = gridSizeLabel.innerText;
-    const grid = selectedGridSize === "4x4" ? grid4x4 : grid6x6;
-    generateGrid(grid, parseInt(selectedGridSize));
-  }
-
-  // Show the "solo" page
-  soloPage.classList.remove("hidden");
-});
-const btn22 = document.getElementById("btn22");
-
-btn22.addEventListener("click", () => {
-  const popup = document.getElementById("myPopup");
-  popup.style.visibility = "hidden";
-
-  // Reset the game to its initial state
-  moveCount = 0;
-  document.querySelector(".moves-count").textContent = moveCount;
-  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
-
-  // Stop the timer if it's running
-  if (timerInterval) {
-    clearInterval(timerInterval);
-  }
-
-  // Flip back any flipped cards
-  cards.forEach((card) => {
-    card.classList.remove("flip", "matched");
-  });
-
-  // Shuffle the cards
-  (function shuffle() {
-    cards.forEach((card) => {
-      let randomPos = Math.floor(Math.random() * cards.length);
-      card.style.order = randomPos;
-    });
-  });
-
-  // Hide the "solo" page and show the landing page
-  landingPage.style.display = "block";
-  soloPage.classList.add("hidden");
-});
