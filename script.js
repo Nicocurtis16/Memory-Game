@@ -5,7 +5,6 @@ let firstCard, secondCard;
 let moveCount = 0; // Initialize the move count
 let timerInterval; // Timer interval variable
 let startTime; // Start time for the timer
-let timeStart = false;
 let currentTheme = "icons"; // Default theme is icons
 
 // Add event listeners for the cards
@@ -28,8 +27,9 @@ themeIconsRadio.addEventListener("change", () => {
   generateGrid(grid6x6, 6); // Regenerate the 6x6 grid based on the current theme
 });
 
+// Update the flipCard function to check if all cards are matched
 function flipCard() {
-  console.log("Flip card function called"); // Add this line
+  console.log("Flip card function called");
 
   if (lockBoard) return;
   if (this === firstCard) return;
@@ -40,10 +40,7 @@ function flipCard() {
     // Start the timer when the first card is flipped
     hasFlippedCard = true;
     firstCard = this;
-    if (!timeStart) {
-      startTimer(); // Start the timer
-      timeStart = true;
-    }
+    startTimer(); // Start the timer
   } else {
     // Increment move count and update the display
     moveCount++;
@@ -52,16 +49,11 @@ function flipCard() {
     // Second card is flipped
     secondCard = this;
     checkForMatch();
-
-    if (allCardsAreFlipped()) {
-      clearInterval(timerInterval);
-      popup(moveCount);
-    }
   }
 }
 
 function checkForMatch() {
-  console.log("CheckMated card function called"); // Add this line
+  console.log("CheckMated card function called");
 
   if (firstCard.dataset.card === secondCard.dataset.card) {
     matchCards();
@@ -77,22 +69,23 @@ function matchCards() {
   firstCard.classList.add("matched");
   secondCard.classList.add("matched");
 
-  // Check if all pairs are matched
-  const matchedCards = document.querySelectorAll(".card.matched");
-  console.log("Matched cards count:", matchedCards.length);
-
-  if (matchedCards.length === totalPairs) {
-    // All pairs are matched, stop the timer
-    console.log("Timer stopped");
-  }
-
   resetBoard();
 
   // Check if the game is completed and do something
-  if (matchedCards.length === cards.length) {
-    // Show the popup after resetting the board
-    // The game is completed. You can add your code here.
-    // For example, display a message, play a sound, etc.
+  checkGameCompletion();
+}
+
+function checkGameCompletion() {
+  const matchedCards = document.querySelectorAll(".card.matched");
+  console.log("Matched cards count:", matchedCards.length);
+
+  const totalCards = grid4x4.style.display === "grid" ? 16 : 36; // Check which grid is currently displayed
+
+  if (matchedCards.length === totalCards) {
+    // All pairs are matched, stop the timer
+    console.log("Timer stopped");
+    clearInterval(timerInterval);
+    popup(moveCount);
   }
 }
 
@@ -138,17 +131,16 @@ function resetBoard() {
   ];
 }
 
+// Add a function to check if all cards are matched
 function allCardsAreFlipped() {
-  const cards = document.querySelectorAll(".card");
-  for (const card of cards) {
-    if (!card.classList.contains("matched")) {
-      return false;
-    }
-  }
-  return true;
+  const matchedCards = document.querySelectorAll(".card.matched");
+  return matchedCards.length === cards.length;
 }
 
 function startTimer() {
+  if (timerInterval) {
+    return; // Timer has already started, don't start it again
+  }
   startTime = new Date().getTime(); // Record the start time
   timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
 }
@@ -165,7 +157,6 @@ function updateTimer() {
     ".moves-count-1"
   ).textContent = `${minutes}:${seconds}`;
 }
-
 // Add event listeners for theme selection, number of prayers, and grid size labels
 const themeLabels = document.querySelectorAll('label[for^="theme-"]');
 const prayersLabels = document.querySelectorAll('label[for^="prayers-"]');
@@ -175,9 +166,6 @@ const landingPage = document.querySelector(".landingpage");
 const soloPage = document.querySelector(".solo1");
 const grid4x4 = document.querySelector(".grid-4x4");
 const grid6x6 = document.querySelector(".grid-6x6");
-const mutipleprayerContainer = document.querySelector(
-  ".mutipleprayer-container"
-); // Container for "mutipleprayer" sections
 
 themeLabels.forEach((label) => {
   label.addEventListener("click", () => {
@@ -191,7 +179,7 @@ themeLabels.forEach((label) => {
 prayersLabels.forEach((label) => {
   label.addEventListener("click", () => {
     prayersLabels.forEach((otherLabel) => {
-      otherLabel.classListremove("selected");
+      otherLabel.classList.remove("selected");
     });
     label.classList.add("selected");
   });
@@ -203,35 +191,257 @@ gridSizeLabels.forEach((label) => {
       otherLabel.classList.remove("selected");
     });
     label.classList.add("selected");
+
+    const selectedGridSizeLabel = label.innerText;
+
+    if (selectedGridSizeLabel === "4x4") {
+      grid4x4.style.display = "grid";
+      grid6x6.style.display = "none";
+      generateGrid(grid4x4, 4); // Generate and populate the 4x4 grid
+    } else if (selectedGridSizeLabel === "6x6") {
+      grid4x4.style.display = "none";
+      grid6x6.style.display = "grid";
+      generateGrid(grid6x6, 6); // Generate and populate the 6x6 grid
+    }
   });
 });
 
-startButton.addEventListener("click", () => {
-  const selectedTheme = document.querySelector('input[name="theme"]:checked');
-  const selectedPrayers = document.querySelector(
-    'input[name="prayers"]:checked'
-  );
-  const selectedGridSize = document.querySelector('input[name="grid"]:checked');
+function generateGrid(grid, gridSize) {
+  grid.innerHTML = "";
 
-  if (
-    selectedTheme &&
-    selectedPrayers &&
-    selectedGridSize &&
-    (parseInt(selectedPrayers.value) > 1 || selectedTheme.value === "Numbers")
-  ) {
-    // Check if the selected theme is "Numbers" or more than 1 prayer is selected
-    generateGrid(selectedGridSize.value);
-    landingPage.style.display = "none";
-    soloPage.classList.remove("hidden");
-    mutipleprayerContainer.style.display = "block"; // Display the ".mutipleprayer" sections
+  const totalPairs = (gridSize * gridSize) / 2;
+  let icons;
+
+  if (currentTheme === "numbers") {
+    // Generate numbers from 1 to totalPairs
+    icons = Array.from({ length: totalPairs }, (_, index) => index + 1);
   } else {
-    // Show an error message or handle the case where the conditions are not met
-    // For example: alert("Please select appropriate options.");
+    // Create an array of Font Awesome icons you want to use
+    icons = [
+      "fa-heart",
+      "fa-star",
+      "fa-bolt",
+      "fa-smile",
+      "fa-flag",
+      "fa-bell",
+      "fa-gem",
+      "fa-moon",
+      "fa-plane",
+      "fa-key",
+      "fa-sun",
+      "fa-cloud",
+      "fa-tree",
+      "fa-apple",
+      "fa-car",
+      "fa-anchor",
+      "fa-coffee",
+      "fa-camera",
+    ];
   }
-});
+
+  // Shuffle the icons to randomize their positions in the grid
+  shuffleArray(icons);
+
+  const pairs = icons.slice(0, totalPairs);
+  const cardElements = [];
+
+  for (let i = 0; i < gridSize * gridSize; i++) {
+    const card = document.createElement("div");
+    card.classList.add("card");
+
+    // Create an icon element and add the Font Awesome class to it
+    const icon = document.createElement("i");
+    if (currentTheme === "numbers") {
+      icon.textContent = pairs[i % totalPairs];
+    } else {
+      icon.classList.add("fas", pairs[i % totalPairs]);
+    }
+
+    card.appendChild(icon);
+    card.setAttribute("data-card", pairs[i % totalPairs]);
+
+    cardElements.push(card);
+  }
+
+  // Shuffle the card elements to randomize their positions in the grid
+  shuffleArray(cardElements);
+
+  cardElements.forEach((card) => {
+    grid.appendChild(card);
+    card.addEventListener("click", flipCard);
+  });
+}
+
+// Shuffle the cards when the page loads
 (function shuffle() {
   cards.forEach((card) => {
     let randomPos = Math.floor(Math.random() * cards.length);
     card.style.order = randomPos;
   });
 })();
+
+// Add start button click event listener
+startButton.addEventListener("click", () => {
+  const selectedGridSizeLabel = document.querySelector(
+    'label[for^="grid-"].selected'
+  );
+  const selectedPrayers = document.querySelector(
+    'input[name="prayers"]:checked'
+  );
+
+  if (selectedGridSizeLabel) {
+    const selectedGridSize = parseInt(selectedGridSizeLabel.innerText);
+    generateGrid(selectedGridSize);
+  }
+
+  if (selectedPrayers) {
+    const prayers = selectedPrayers.value;
+    // Use the selected number of prayers in your game logic
+  }
+
+  landingPage.style.display = "none";
+  soloPage.classList.remove("hidden");
+});
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+// Add event listeners for the "Reset" button (btn11) and "btn2"
+const resetButton = document.getElementById("btn11");
+const backToLandingPageButton = document.getElementById("btn2");
+
+resetButton.addEventListener("click", resetGame);
+backToLandingPageButton.addEventListener("click", backToLandingPage);
+
+function resetGame() {
+  // Reset the game to its initial state
+  moveCount = 0;
+  document.querySelector(".moves-count").textContent = moveCount;
+  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
+
+  // Stop the timer if it's running
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  // Flip back any flipped cards
+  cards.forEach((card) => {
+    card.classList.remove("flip", "matched");
+  });
+
+  // Shuffle the cards
+  shuffleCards();
+
+  // Hide the popup
+  const popup = document.getElementById("myPopup");
+  popup.style.visibility = "hidden";
+}
+
+function backToLandingPage() {
+  // Return to the landing page
+  landingPage.style.display = "flex";
+  soloPage.classList.add("hidden");
+}
+btn1.addEventListener("click", () => {
+  // Reset the game to its initial state
+  moveCount = 0;
+  document.querySelector(".moves-count").textContent = moveCount;
+  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
+
+  // Stop the timer if it's running
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  // Flip back any flipped cards
+  cards.forEach((card) => {
+    card.classList.remove("flip", "matched");
+  });
+
+  // Shuffle the cards
+  (function shuffle() {
+    cards.forEach((card) => {
+      let randomPos = Math.floor(Math.random() * cards.length);
+      card.style.order = randomPos;
+    });
+  });
+
+  // Hide the popup
+  const popup = document.getElementById("myPopup");
+  popup.style.visibility = "hidden";
+});
+
+btn11.addEventListener("click", () => {
+  const popup = document.getElementById("myPopup");
+  popup.style.visibility = "hidden";
+
+  // Reset the game to its initial state
+  moveCount = 0;
+  document.querySelector(".moves-count").textContent = moveCount;
+  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
+
+  // Stop the timer if it's running
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  // Flip back any flipped cards
+  cards.forEach((card) => {
+    card.classList.remove("flip", "matched");
+  });
+
+  // Shuffle the cards
+  (function shuffle() {
+    cards.forEach((card) => {
+      let randomPos = Math.floor(Math.random() * cards.length);
+      card.style.order = randomPos;
+    });
+  });
+
+  // Reset the grid, preserving its state
+  const gridSizeLabel = document.querySelector('label[for^="grid-"].selected');
+  if (gridSizeLabel) {
+    const selectedGridSize = gridSizeLabel.innerText;
+    const grid = selectedGridSize === "4x4" ? grid4x4 : grid6x6;
+    generateGrid(grid, parseInt(selectedGridSize));
+  }
+
+  // Show the "solo" page
+  soloPage.classList.remove("hidden");
+});
+const btn22 = document.getElementById("btn22");
+
+btn22.addEventListener("click", () => {
+  const popup = document.getElementById("myPopup");
+  popup.style.visibility = "hidden";
+
+  // Reset the game to its initial state
+  moveCount = 0;
+  document.querySelector(".moves-count").textContent = moveCount;
+  document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
+
+  // Stop the timer if it's running
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+
+  // Flip back any flipped cards
+  cards.forEach((card) => {
+    card.classList.remove("flip", "matched");
+  });
+
+  // Shuffle the cards
+  (function shuffle() {
+    cards.forEach((card) => {
+      let randomPos = Math.floor(Math.random() * cards.length);
+      card.style.order = randomPos;
+    });
+  });
+
+  // Hide the "solo" page and show the landing page
+  landingPage.style.display = "block";
+  soloPage.classList.add("hidden");
+});

@@ -163,6 +163,7 @@ h2 {
   justify-content: space-between;
   display: flex;
   height: 72px;
+  border-radius: 10px;
   align-items: center;
   margin-left: 21px;
   background-color: #dfe7ec;
@@ -180,6 +181,7 @@ h1 {
   color: #7191a5;
   font-weight: 700;
   font-size: 18px;
+  margin-left: 10px;
 }
 
 .moves-count {
@@ -191,7 +193,7 @@ h1 {
 .moves-count-1 {
   font-size: 32px;
   color: #304859;
-  padding-left: 80px;
+
   font-weight: 700;
 }
 
