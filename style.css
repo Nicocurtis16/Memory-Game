@@ -390,3 +390,65 @@ h3 {
   width: 82px; /* Adjust the width for the 6x6 grid cards as needed */
   height: 82px; /* Adjust the height for the 6x6 grid cards as needed */
 }
+.mutipleprayer {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.frame {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fda214;
+  width: 1110px;
+  height: 900px;
+}
+.upper {
+  margin-top: -8.1rem;
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: #304859;
+  width: 100%;
+  height: 50px;
+}
+#btn111,
+#btn222 {
+  width: 149px;
+  height: 52px;
+  background-color: #fda214;
+  color: white;
+  border-radius: 26px;
+  border: 0;
+  font-weight: 700;
+  font-size: 20px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+#btn222 {
+  background-color: #979797;
+}
+#uppertitle {
+  font-size: 40px;
+  color: rgb(0, 0, 0);
+  font-weight: 700;
+  margin-bottom: 50px;
+}
+.middlecenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  width: 80%;
+  height: 80%;
+}
+.lastdown {
+  width: 100%;
+  background-color: #fff;
+}
+.hidden {
+  display: none;
+}

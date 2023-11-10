@@ -163,6 +163,7 @@ const prayersLabels = document.querySelectorAll('label[for^="prayers-"]');
 const gridSizeLabels = document.querySelectorAll('label[for^="grid-"]');
 const startButton = document.getElementById("start");
 const landingPage = document.querySelector(".landingpage");
+const multiplePrayerSection = document.querySelector(".mutipleprayer");
 const soloPage = document.querySelector(".solo1");
 const grid4x4 = document.querySelector(".grid-4x4");
 const grid6x6 = document.querySelector(".grid-6x6");
@@ -182,6 +183,37 @@ prayersLabels.forEach((label) => {
       otherLabel.classList.remove("selected");
     });
     label.classList.add("selected");
+
+    const selectedPrayers = document.querySelectorAll(
+      'input[name="prayers"]:checked'
+    );
+
+    const isOneplayer = [...selectedPrayers].some(
+      (radio) => radio.value === "1"
+    );
+    const isTwoPlayers = [...selectedPrayers].some(
+      (radio) => radio.value === "2"
+    );
+    const isThreePlayers = [...selectedPrayers].some(
+      (radio) => radio.value === "3"
+    );
+    const isFourPlayers = [...selectedPrayers].some(
+      (radio) => radio.value === "4"
+    );
+
+    if (selectedPrayers) {
+      if (selectedPrayers.value === "1") {
+        multiplePrayerSection.style.display = "none";
+        soloPage.style.display = "flex";
+      } else if (
+        selectedPrayers.value === "2" ||
+        selectedPrayers.value === "3" ||
+        selectedPrayers.value === "4"
+      ) {
+        multiplePrayerSection.style.display = "flex";
+        soloPage.style.display = "none";
+      }
+    }
   });
 });
 
@@ -285,7 +317,7 @@ startButton.addEventListener("click", () => {
   const selectedGridSizeLabel = document.querySelector(
     'label[for^="grid-"].selected'
   );
-  const selectedPrayers = document.querySelector(
+  const selectedPrayers = document.querySelectorAll(
     'input[name="prayers"]:checked'
   );
 
@@ -294,13 +326,39 @@ startButton.addEventListener("click", () => {
     generateGrid(selectedGridSize);
   }
 
-  if (selectedPrayers) {
-    const prayers = selectedPrayers.value;
-    // Use the selected number of prayers in your game logic
-  }
+  const landingPage = document.querySelector(".landingpage");
 
-  landingPage.style.display = "none";
-  soloPage.classList.remove("hidden");
+  // if (selectedPrayers) {
+  //   const prayers = selectedPrayers.value;
+  //   // Use the selected number of prayers in your game logic
+  // }
+
+  // landingPage.style.display = "none";
+  // soloPage.style.display = "flex";
+
+  const isOneplayer = [...selectedPrayers].some((radio) => radio.value === "1");
+  const isTwoPlayers = [...selectedPrayers].some(
+    (radio) => radio.value === "2"
+  );
+  const isThreePlayers = [...selectedPrayers].some(
+    (radio) => radio.value === "3"
+  );
+  const isFourPlayers = [...selectedPrayers].some(
+    (radio) => radio.value === "4"
+  );
+  console.log(isTwoPlayers);
+
+  if (isOneplayer) {
+    landingPage.style.display = "none";
+    soloPage.style.display = "flex";
+    soloPage.style.flexDirection = "column";
+    console.log("this works!");
+  } else if (isTwoPlayers || isThreePlayers || isFourPlayers) {
+    multiplePrayerSection.style.display = "flex";
+    soloPage.style.display = "none";
+    landingPage.style.display = "none";
+    console.log("this one too works!");
+  }
 });
 
 function shuffleArray(array) {
