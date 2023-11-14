@@ -115,11 +115,6 @@
     font-size: 24;
   }
 
-  .down {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
   .moves-count {
     font-size: 24px;
     color: #304859;
@@ -136,10 +131,6 @@
     display: block;
     /* flex-direction: column; */
   }
-
-  .display h1 {
-    background-color: red;
-  }
 }
 
 @media (min-width: 310px) and (max-width: 750px) {
@@ -149,8 +140,8 @@
   }
 
   .grid-6x6 .card {
-    width: 82px; /* Adjust the width for the 6x6 grid cards as needed */
-    height: 82px; /* Adjust the height for the 6x6 grid cards as needed */
+    width: 46.88px; /* Adjust the width for the 6x6 grid cards as needed */
+    height: 46.88px; /* Adjust the height for the 6x6 grid cards as needed */
   }
 
   .popup-content {
@@ -228,5 +219,46 @@
     gap: 10px;
 
     margin-top: 1.5rem;
+  }
+  .solopanel {
+    display: flex;
+    margin: 0;
+    height: 5rem;
+    width: 90vw;
+    background-color: #ffffff;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top: 5rem;
+    /* margin-top: -0.5rem; */
+    margin-bottom: 1.5rem;
+  }
+  .solo1 {
+    height: 100vh;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    font-family: "Atkinson Hyperlegible", sans-serif;
+    align-items: center;
+  }
+  .display {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: block;
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .down {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
   }
 }
