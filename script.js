@@ -25,6 +25,7 @@ themeIconsRadio.addEventListener("change", () => {
   currentTheme = "icons";
   generateGrid(grid4x4, 4); // Regenerate the 4x4 grid based on the current theme
   generateGrid(grid6x6, 6); // Regenerate the 6x6 grid based on the current theme
+  console.log("qwerty");
 });
 
 // Update the flipCard function to check if all cards are matched
@@ -166,7 +167,9 @@ const landingPage = document.querySelector(".landingpage");
 const multiplePrayerSection = document.querySelector(".mutipleprayer");
 const soloPage = document.querySelector(".solo1");
 const grid4x4 = document.querySelector(".grid-4x4");
+const grid4x41 = document.querySelector(".grid-4x41");
 const grid6x6 = document.querySelector(".grid-6x6");
+const grid6x61 = document.querySelector(".grid-6x61");
 
 themeLabels.forEach((label) => {
   label.addEventListener("click", () => {
@@ -184,35 +187,37 @@ prayersLabels.forEach((label) => {
     });
     label.classList.add("selected");
 
-    const selectedPrayers = document.querySelectorAll(
+    const selectedPrayers = document.querySelector(
       'input[name="prayers"]:checked'
     );
 
-    const isOneplayer = [...selectedPrayers].some(
-      (radio) => radio.value === "1"
-    );
-    const isTwoPlayers = [...selectedPrayers].some(
-      (radio) => radio.value === "2"
-    );
-    const isThreePlayers = [...selectedPrayers].some(
-      (radio) => radio.value === "3"
-    );
-    const isFourPlayers = [...selectedPrayers].some(
-      (radio) => radio.value === "4"
-    );
+    const prayerContainer = document.getElementById("prayer-container");
 
+    // Remove existing prayer sections
+    prayerContainer.innerHTML = "";
     if (selectedPrayers) {
-      if (selectedPrayers.value === "1") {
+      const numPrayers = parseInt(selectedPrayers.value);
+
+      for (let i = 1; i <= numPrayers; i++) {
+        const prayerSection = document.createElement("div");
+        prayerSection.classList.add("prayer-section");
+        prayerSection.innerHTML = `<h2>Prayer ${i}</h2>`;
+
+        // Add other content specific to each prayer section
+
+        prayerContainer.appendChild(prayerSection);
+      }
+
+      if (numPrayers === 1) {
         multiplePrayerSection.style.display = "none";
         soloPage.style.display = "flex";
-      } else if (
-        selectedPrayers.value === "2" ||
-        selectedPrayers.value === "3" ||
-        selectedPrayers.value === "4"
-      ) {
+      } else {
         multiplePrayerSection.style.display = "flex";
         soloPage.style.display = "none";
       }
+
+      // Display the prayer container
+      prayerContainer.style.display = "flex";
     }
   });
 });
@@ -263,7 +268,7 @@ function generateGrid(grid, gridSize) {
       "fa-sun",
       "fa-cloud",
       "fa-tree",
-      "fa-apple",
+      "fa-trash",
       "fa-car",
       "fa-anchor",
       "fa-coffee",
@@ -321,11 +326,6 @@ startButton.addEventListener("click", () => {
     'input[name="prayers"]:checked'
   );
 
-  if (selectedGridSizeLabel) {
-    const selectedGridSize = parseInt(selectedGridSizeLabel.innerText);
-    generateGrid(selectedGridSize);
-  }
-
   const landingPage = document.querySelector(".landingpage");
 
   // if (selectedPrayers) {
@@ -335,6 +335,8 @@ startButton.addEventListener("click", () => {
 
   // landingPage.style.display = "none";
   // soloPage.style.display = "flex";
+
+  console.log(selectedPrayers);
 
   const isOneplayer = [...selectedPrayers].some((radio) => radio.value === "1");
   const isTwoPlayers = [...selectedPrayers].some(
@@ -353,6 +355,10 @@ startButton.addEventListener("click", () => {
     soloPage.style.display = "flex";
     soloPage.style.flexDirection = "column";
     console.log("this works!");
+    // if (selectedGridSizeLabel) {
+    //   const selectedGridSize = parseInt(selectedGridSizeLabel.innerText);
+    //   generateGrid(selectedGridSize, 8);
+    // }
   } else if (isTwoPlayers || isThreePlayers || isFourPlayers) {
     multiplePrayerSection.style.display = "flex";
     soloPage.style.display = "none";

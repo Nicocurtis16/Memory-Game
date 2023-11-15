@@ -58,7 +58,11 @@ h2 {
   background-color: #6395b8;
 }
 .hidden-radio {
-  display: none;
+  /* display: none; */
+}
+
+input[type="radio"]:checked + label {
+  background-color: red;
 }
 .button-label.selected {
   background-color: #304859 !important;
@@ -79,14 +83,11 @@ h2 {
   background-color: #6395b8;
 }
 .hidden-radio {
-  display: none;
+  /* display: none; */
 }
 
 .button-label2:hover {
   background-color: #6395b8;
-}
-.hidden-radio {
-  display: none;
 }
 
 #start {
@@ -452,3 +453,29 @@ h3 {
 .hidden {
   display: none;
 }
+/* Add a CSS class to control the visibility of prayer sections */
+.prayer-section {
+  display: none;
+}
+
+.prayer-section.active {
+  display: block;
+}
+#prayer-container {
+  height: 5rem;
+  width: 15rem;
+  background-color: #304859;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.prayer-section {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Add other styles as needed */

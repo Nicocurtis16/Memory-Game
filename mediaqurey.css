@@ -8,257 +8,55 @@
 
 /* Styles for screens within the tablet range (between 768px and 1024px) */
 @media (min-width: 310px) and (max-width: 750px) {
-  /* Styles for screens within the tablet range (between 768px and 1024px) */
-  @media (min-width: 768px) and (max-width: 1024px) {
-    /* .panel {
-    margin-top: -2rem;
-  } */
-    #title {
-      margin-top: -2rem;
-    }
-  }
-
-  /* Styles for screens within the tablet range (between 768px and 1024px) */
-  @media (min-width: 310px) and (max-width: 750px) {
-    /* #title {
-      padding-top: 4rem;
-      padding-bottom: 3rem;
-      font-weight: 700;
-      font-size: 40px;
-      color: white;
-    } */
-    .body {
-      height: 100vh;
-      width: 100%;
-    }
-    .panel {
-      height: 386px;
-      width: 327px;
-    }
-    #theme_sel {
-      margin-top: 1rem;
-      margin-left: 1.1rem;
-    }
-    #theme {
-      font-size: 15px;
-    }
-    .dowae .button-label {
-      height: 40px;
-      width: 134px;
-      font-size: 16px;
-      line-height: 40px;
-      margin-right: 1rem;
-    }
-    #prayers {
-      margin-top: 1rem;
-      margin-left: 1.2rem;
-    }
-    .button-label {
-      height: 40px;
-      width: 134px;
-      font-size: 16px;
-      font-weight: 700;
-      margin-right: 1rem;
-      line-height: 40px;
-    }
-    .button-label1 {
-      height: 40px;
-      width: 62px;
-      font-size: 16px;
-      font-weight: 700;
-      margin-right: 0.5rem;
-      line-height: 40px;
-    }
-    #grid {
-      margin-top: 1rem;
-      margin-left: 1.1rem;
-    }
-    .button-label2 {
-      height: 40px;
-      width: 134px;
-      font-size: 16px;
-      font-weight: 700;
-      margin-right: 1rem;
-      line-height: 40px;
-    }
-    #start {
-      margin-top: 2rem;
-      margin-left: 1rem;
-      height: 48px;
-      width: 290px;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-  }
-}
-
-@media (min-width: 320px) and (max-width: 750px) {
-  #btn1,
-  #btn2 {
-    display: none;
-  }
-  #btn3 {
-    width: 78px;
-    height: 40px;
-    background-color: #fda214;
-    color: white;
-    border-radius: 26px;
-    border: 0;
-    font-weight: 700;
-    font-size: 16px;
-    margin-left: 20px;
-    cursor: pointer;
-    visibility: unset;
-  }
-  #titlesolo {
-    font-size: 24;
-  }
-
-  .moves-count {
-    font-size: 24px;
-    color: #304859;
-  }
-  .moves-count-1 {
-    font-size: 24px;
-    color: #304859;
-  }
-  .display {
-    width: 150px;
-    height: 70px;
-
-    /* justify-content: space-between; */
-    display: block;
-    /* flex-direction: column; */
-  }
-}
-
-@media (min-width: 310px) and (max-width: 750px) {
-  .grid-4x4 .card {
-    width: 72.53px; /* Adjust the width for the 4x4 grid cards as needed */
-    height: 72.53px; /* Adjust the height for the 4x4 grid cards as needed */
-  }
-
-  .grid-6x6 .card {
-    width: 46.88px; /* Adjust the width for the 6x6 grid cards as needed */
-    height: 46.88px; /* Adjust the height for the 6x6 grid cards as needed */
-  }
-
-  .popup-content {
-    background-color: white;
-    text-align: center;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 5px;
-    /* box-shadow: 0px 0px 10px 0px #000; */
-    width: 327px;
-    height: 378px;
-    border-radius: 20px;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-  }
-  #btn11,
-  #btn22 {
-    width: 279px;
-    height: 48px;
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .popupdisplay {
-    background-color: #dfe7ec;
-    width: 279px;
-    height: 48px;
-    border-radius: 10px;
-    margin-top: 15px;
-    /* margin-left: 50px; */
-    line-height: 48px;
-    display: flex;
-    justify-content: space-between;
-  }
-  #myPopup {
-    /* display: none; */
-    position: absolute;
-    top: 0;
-    left: 0;
-    /* transform: translate(-50%, -50%); */
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    visibility: hidden;
-  }
-  #popuptitle {
-    margin-top: 40px;
-    font-size: 24px;
-    color: #152938;
-    margin-bottom: 15px;
-  }
-
-  #poptxt2,
-  #poptxt3 {
-    font-size: 20px;
-  }
-  #size {
-    font-size: 14px;
-    margin-bottom: -1px;
-  }
-  #popuptitle {
-    margin-top: 1rem;
-  }
-  .popup-cont {
-    display: flex;
-    width: 85%;
-    flex-direction: column;
-    justify-content: space-around;
-    gap: 10px;
-
-    margin-top: 1.5rem;
-  }
-  .solopanel {
-    display: flex;
-    margin: 0;
-    height: 5rem;
-    width: 90vw;
-    background-color: #ffffff;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    top: 5rem;
-    /* margin-top: -0.5rem; */
-    margin-bottom: 1.5rem;
-  }
-  .solo1 {
-    height: 100vh;
-    width: 100%;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
-    font-family: "Atkinson Hyperlegible", sans-serif;
-    align-items: center;
-  }
-  .display {
-    margin-top: 1.5rem;
-    display: flex;
-    flex-direction: block;
-  }
-  .center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  .homeframe {
+    width: 20.4375rem;
+    height: 24.125rem;
   }
   .down {
-    width: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
+    width: 20.4375rem;
+    height: 24.125rem;
+  }
+  .Theme-radio {
+    width: 17.4375rem;
+  }
+  .Theme,
+  .Players,
+  .Grid {
+    width: 17.4375rem;
+  }
+  .Theme-btn {
+    width: 8.375rem;
+    height: 2.5rem;
+  }
+  .prayer-radio {
+    width: 17.4375rem;
+  }
+
+  .Prayer-btn {
+    width: 3.875rem;
+    height: 2.5rem;
+  }
+  .Grid-radio {
+    width: 17.4375rem;
+  }
+
+  .grid-btn {
+    width: 8.375rem;
+    height: 2.5rem;
+  }
+  .start-btn {
+    width: 17.4375rem;
+    height: 3rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  #players-title,
+  #Theme-title,
+  #grid-title {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+  #title {
+    margin-bottom: -1.5rem;
   }
 }
