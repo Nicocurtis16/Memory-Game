@@ -7,7 +7,7 @@
 }
 
 /* Styles for screens within the tablet range (between 768px and 1024px) */
-@media (min-width: 310px) and (max-width: 750px) {
+@media (min-width: 310px) and (max-width: 430px) {
   .homeframe {
     width: 20.4375rem;
     height: 24.125rem;
@@ -27,6 +27,7 @@
   .Theme-btn {
     width: 8.375rem;
     height: 2.5rem;
+    line-height: 2.5rem;
   }
   .prayer-radio {
     width: 17.4375rem;
@@ -35,6 +36,7 @@
   .Prayer-btn {
     width: 3.875rem;
     height: 2.5rem;
+    line-height: 2.5rem;
   }
   .Grid-radio {
     width: 17.4375rem;
@@ -43,6 +45,7 @@
   .grid-btn {
     width: 8.375rem;
     height: 2.5rem;
+    line-height: 2.5rem;
   }
   .start-btn {
     width: 17.4375rem;
@@ -58,5 +61,83 @@
   }
   #title {
     margin-bottom: -1.5rem;
+  }
+  .soloframe {
+    width: 23.4375rem;
+    height: 40rem;
+  }
+  .grid-4x4 .card {
+    width: 4.53313rem;
+    height: 4.53313rem;
+  }
+  .grid-6x6 .card {
+    width: 2.92988rem;
+    height: 2.92988rem;
+    flex-shrink: 0;
+  }
+  .display {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 9.4375rem;
+    height: 4.375rem;
+    flex-shrink: 0;
+    align-items: center;
+  }
+  h1 {
+    font-size: 0.9375rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  .moves-count {
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  .moves-count-1 {
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  .solomiddle {
+    width: 20.4375rem;
+    height: 20.4375rem;
+    margin-top: 5.4rem;
+    margin-bottom: 5.4rem;
+  }
+  .solodown {
+    width: 20.4375rem;
+    height: 4.375rem;
+    flex-shrink: 0;
+  }
+  #btn1,
+  #btn2 {
+    display: none;
+  }
+  #btn3 {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border: 0;
+    width: 4.875rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 1.625rem;
+    background: #fda214;
+    color: #fcfcfc;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 2.5;
+  }
+  .grid-4x4 {
+    gap: 10px; /* Adjust the gap size between cards */
+  }
+  .grid-6x6 {
+    gap: 10px;
   }
 }

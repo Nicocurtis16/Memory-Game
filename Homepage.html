@@ -23,6 +23,7 @@
                   id="numbers"
                   class="checkbox"
                   name="theme"
+                  checked
                 />
                 <label for="numbers" class="Theme-btn"> Number</label>
 
@@ -39,7 +40,9 @@
                   type="radio"
                   id="Prayer1"
                   class="checkbox"
-                  name="theme"
+                  name="players"
+                  value="1"
+                  checked
                 />
                 <label for="Prayer1" class="Prayer-btn"> 1</label>
 
@@ -47,7 +50,8 @@
                   type="radio"
                   id="Prayer2"
                   class="checkbox"
-                  name="theme"
+                  name="players"
+                  value="2"
                 />
                 <label for="Prayer2" class="Prayer-btn">2</label>
 
@@ -55,7 +59,8 @@
                   type="radio"
                   id="Prayer3"
                   class="checkbox"
-                  name="theme"
+                  name="players"
+                  value="3"
                 />
                 <label for="Prayer3" class="Prayer-btn">3</label>
 
@@ -63,7 +68,8 @@
                   type="radio"
                   id="Prayer4"
                   class="checkbox"
-                  name="theme"
+                  name="players"
+                  value="4"
                 />
                 <label for="Prayer4" class="Prayer-btn">4</label>
               </div>
@@ -73,17 +79,75 @@
             <p id="grid-title">Grid Size</p>
             <form>
               <div class="Grid-radio">
-                <input type="radio" id="4x4" class="checkbox" name="theme" />
+                <input
+                  type="radio"
+                  id="4x4"
+                  class="checkbox"
+                  name="grid"
+                  checked
+                />
                 <label for="4x4" class="grid-btn"> 4x4</label>
 
-                <input type="radio" id="6x6" class="checkbox" name="theme" />
+                <input type="radio" id="6x6" class="checkbox" name="grid" />
                 <label for="6x6" class="grid-btn">6x6</label>
               </div>
             </form>
           </div>
-          <button class="start-btn">Start Game</button>
+          <button class="start-btn" id="start-btn">Start Game</button>
         </div>
       </div>
     </div>
+    <div class="solo-play" style="display: none">
+      <div class="soloframe">
+        <div class="solotop">
+          <p id="solotitle">Memory</p>
+          <div class="solo-btn-container">
+            <button id="btn1">Restart</button>
+            <button id="btn2">New Game</button>
+            <button id="btn3">Menu</button>
+          </div>
+        </div>
+        <div class="solomiddle">
+          <div class="grid grid-4x4">
+            <!-- 4x4 grid cards go here -->
+          </div>
+
+          <div class="grid grid-6x6">
+            <!-- 6x6 grid cards go here -->
+          </div>
+        </div>
+        <div class="solodown">
+          <div class="display" id="time">
+            <h1>Time:</h1>
+            <p class="moves-count-1">0:00</p>
+          </div>
+
+          <div class="display" id="moves">
+            <h1>Moves:</h1>
+            <p class="moves-count">0</p>
+          </div>
+        </div>
+        <div class="mainpopup" id="myPopup">
+          <div class="popup-content">
+            <h1 id="popuptitle">You did it!</h1>
+            <h3 id="size">Game over! Here’s how you got on…</h3>
+            <div class="popupdisplay">
+              <p id="poptxt1">Time Elapsed</p>
+              <h1 id="poptxt2">0:00</h1>
+            </div>
+            <div class="popupdisplay">
+              <p id="poptxt1">Moves Taken</p>
+              <p id="poptxt3">0 Moves</p>
+            </div>
+            <div class="popup-cont">
+              <button class="popup-button" id="btn11">Restart</button>
+              <button class="popup-button" id="btn22">Setup New Game</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <script src="index.js"></script>
   </body>
 </html>

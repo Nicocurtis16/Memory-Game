@@ -56,14 +56,14 @@ function flipCard() {
 function checkForMatch() {
   console.log("CheckMated card function called");
 
+  lockBoard = true; // Lock the board to prevent further card flips during the check
+
   if (firstCard.dataset.card === secondCard.dataset.card) {
     matchCards();
   } else {
     unflipCards();
   }
 }
-
-const totalPairs = cards.length / 2;
 
 function matchCards() {
   console.log("Matching cards function");
@@ -74,6 +74,15 @@ function matchCards() {
 
   // Check if the game is completed and do something
   checkGameCompletion();
+}
+
+function unflipCards() {
+  setTimeout(() => {
+    firstCard.classList.remove("flip");
+    secondCard.classList.remove("flip");
+
+    resetBoard();
+  }, 1000);
 }
 
 function checkGameCompletion() {
