@@ -141,4 +141,35 @@
   .grid-6x6 {
     gap: 10px;
   }
+  .popup-content {
+    width: 20.4375rem;
+    height: 24.5rem;
+  }
+  #popuptitle {
+    font-size: 1.5rem;
+  }
+  .popupdisplay {
+    justify-content: space-between;
+    width: 17.4375rem;
+    height: 3rem;
+    line-height: 3rem;
+    margin-top: 0.8rem;
+  }
+  #poptxt2,
+  #poptxt3 {
+    font-size: 1.25rem;
+    line-height: 3rem;
+  }
+  h3 {
+    font-size: 0.875rem;
+    margin-bottom: 0.1rem;
+    margin-top: -0.3rem;
+  }
+  .popup-cont {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
 }
