@@ -17,13 +17,14 @@ cards.forEach((card) => card.addEventListener("click", flipCard));
 const setupPage = () => {
   startBtn.addEventListener("click", () => {
     const checkedInput = document.querySelectorAll(
-      'input[type = "radio"]:checked'
+      'input[type="radio"]:checked'
     );
 
     const numberTheme = Array.from(checkedInput).some(
       (radio) => radio.id === "numbers"
     );
-    const IconTheme = Array.from(checkedInput).some(
+    const iconTheme = Array.from(checkedInput).some(
+      // Change IconTheme to iconTheme
       (radio) => radio.id === "icons"
     );
     const isOnePlayer = Array.from(checkedInput).some(
@@ -45,13 +46,21 @@ const setupPage = () => {
       (radio) => radio.id === "6x6"
     );
 
-    if (numberTheme & isOnePlayer & is4x4grid) {
+    if (numberTheme && isOnePlayer && is4x4grid) {
       setup.style.display = "none";
       grid6x61.style.display = "none";
       soloPlay.style.display = "flex";
       generateGrid(grid4x4, 4);
       checkGameCompletion(); // Check for game completion after generating the 4x4 grid
-    } else if (numberTheme & isOnePlayer & is6x6grid) {
+    } else if (iconTheme && isOnePlayer && is4x4grid) {
+      // Change IconTheme to iconTheme
+      currentTheme = "icons";
+      setup.style.display = "none";
+      grid6x61.style.display = "none";
+      soloPlay.style.display = "flex";
+      generateGrid(grid4x4, 4);
+      checkGameCompletion(); // Check for game completion after generating the 4x4 grid
+    } else if (numberTheme && isOnePlayer && is6x6grid) {
       setup.style.display = "none";
       grid4x41.style.display = "none";
       soloPlay.style.display = "flex";
@@ -68,18 +77,20 @@ setupPage();
 const grid6x6 = document.querySelector(".grid-6x6");
 const grid4x4 = document.querySelector(".grid-4x4");
 
+// ...
+
 function generateGrid(grid, gridSize) {
   grid.innerHTML = "";
 
   const totalPairs = (gridSize * gridSize) / 2;
-  let icons;
+  let elements;
 
   if (currentTheme === "numbers") {
     // Generate numbers from 1 to totalPairs
-    icons = Array.from({ length: totalPairs }, (_, index) => index + 1);
+    elements = Array.from({ length: totalPairs }, (_, index) => index + 1);
   } else {
     // Create an array of Font Awesome icons you want to use
-    icons = [
+    elements = [
       "fa-heart",
       "fa-star",
       "fa-bolt",
@@ -101,17 +112,17 @@ function generateGrid(grid, gridSize) {
     ];
   }
 
-  // Shuffle the icons to randomize their positions in the grid
-  shuffleArray(icons);
+  // Shuffle the elements to randomize their positions in the grid
+  shuffleArray(elements);
 
-  const pairs = icons.slice(0, totalPairs);
+  const pairs = elements.slice(0, totalPairs);
   const cardElements = [];
 
   for (let i = 0; i < gridSize * gridSize; i++) {
     const card = document.createElement("div");
     card.classList.add("card");
 
-    // Create an icon element and add the Font Awesome class to it
+    // Create an icon element and add the appropriate content or class
     const icon = document.createElement("i");
     if (currentTheme === "numbers") {
       icon.textContent = pairs[i % totalPairs];
