@@ -78,6 +78,13 @@ const grid6x6 = document.querySelector(".grid-6x6");
 const grid4x4 = document.querySelector(".grid-4x4");
 
 // ...
+function startTimer() {
+  if (timerInterval) {
+    return; // Timer has already started, don't start it again
+  }
+  startTime = new Date().getTime(); // Record the start time
+  timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
+}
 
 function generateGrid(grid, gridSize) {
   grid.innerHTML = "";
@@ -149,6 +156,13 @@ function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
+    function startTimer() {
+      if (timerInterval) {
+        return; // Timer has already started, don't start it again
+      }
+      startTime = new Date().getTime(); // Record the start time
+      timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
+    }
   }
 }
 function checkGameCompletion() {
@@ -202,13 +216,6 @@ function flipCard() {
     secondCard = this;
     checkForMatch();
   }
-}
-function startTimer() {
-  if (timerInterval) {
-    return; // Timer has already started, don't start it again
-  }
-  startTime = new Date().getTime(); // Record the start time
-  timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
 }
 
 function checkForMatch() {
@@ -300,5 +307,90 @@ window.addEventListener("click", function (event) {
   const popup = document.getElementById("popup");
   if (event.target === popup) {
     popup.style.display = "none";
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const btn1 = document.getElementById("btn1");
+  const btn11 = document.getElementById("btn11");
+  const menuPopBtn1 = document.getElementById("menu-pop-bnt1");
+  const menuPopBtn2 = document.getElementById("menu-pop-bnt2");
+  const menuPopBtn3 = document.getElementById("menu-pop-bnt3");
+
+  // Add event listener for the "Back to Homepage" buttons
+  const backToHomepageButtons = document.querySelectorAll(
+    "#btn2, #btn22, #menu-pop-bnt2"
+  );
+
+  backToHomepageButtons.forEach((button) => {
+    button.addEventListener("click", backToHomepage);
+  });
+
+  function backToHomepage() {
+    // Reload the page to go back to the Homepage
+    window.location.reload();
+  }
+
+  // Your existing code...
+
+  // Add click event listener to btn1
+  btn1.addEventListener("click", resetGame);
+
+  // Add click event listener to btn11
+  btn11.addEventListener("click", function () {
+    closePopup();
+    resetGame();
+  });
+
+  // Add click event listener to menuPopBtn1
+  menuPopBtn1.addEventListener("click", function () {
+    closePopup();
+    resetGame();
+  });
+
+  // Add click event listener to menuPopBtn2
+  menuPopBtn2.addEventListener("click", function () {
+    closePopup();
+    resetGame();
+  });
+
+  // Add click event listener to menuPopBtn3
+  menuPopBtn3.addEventListener("click", function () {
+    // Add functionality for "Resume Game" button if needed
+  });
+
+  function closePopup() {
+    const popup = document.getElementById("popup");
+    popup.style.visibility = "hidden";
+  }
+
+  function resetGame() {
+    // Reset the game to its initial state
+    moveCount = 0;
+    document.querySelector(".moves-count").textContent = moveCount;
+    document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
+
+    // Stop the timer if it's running
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+
+    // Flip back any flipped cards
+    cards.forEach((card) => {
+      card.classList.remove("flip", "matched");
+    });
+
+    // Reset the board
+    resetBoard();
+
+    // Shuffle the cards
+    shuffleCards();
+
+    // Start the timer again
+    startTimer();
+
+    // Hide the popup
+    const popup = document.getElementById("myPopup");
+    popup.style.visibility = "hidden";
   }
 });
