@@ -175,7 +175,14 @@ input[type="radio"] {
 
 /* CSS for showing the numbers when cards are flipped */
 .card.flip {
-  color: rgb(255, 255, 255); /* Show the number */
+  color: #f2f2f2;
+  text-align: center;
+  font-family: Atkinson Hyperlegible;
+  font-size: 3.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+
   background-color: #bcced9; /* Modify this to your preferred background color */
 }
 
@@ -427,4 +434,11 @@ h3 {
 #btn22 {
   background-color: #dfe7ec;
   color: #304859;
+}
+body {
+  font-family: Arial, sans-serif;
+}
+
+.menu-popup {
+  display: none;
 }

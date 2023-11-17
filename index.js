@@ -164,6 +164,7 @@ function checkGameCompletion() {
     popup(moveCount);
   }
 }
+
 function popup(moveCount) {
   const popup = document.getElementById("myPopup");
   const popupTitle = document.getElementById("popuptitle");
@@ -289,3 +290,15 @@ function resetGame() {
   const popup = document.getElementById("myPopup");
   popup.style.visibility = "hidden";
 }
+document.getElementById("btn3").addEventListener("click", function () {
+  // Display the popup
+  document.getElementById("popup").style.display = "block";
+});
+
+// Close the popup if the user clicks outside of it
+window.addEventListener("click", function (event) {
+  const popup = document.getElementById("popup");
+  if (event.target === popup) {
+    popup.style.display = "none";
+  }
+});

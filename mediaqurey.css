@@ -8,6 +8,11 @@
 
 /* Styles for screens within the tablet range (between 768px and 1024px) */
 @media (min-width: 310px) and (max-width: 430px) {
+  .body {
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+  }
   .homeframe {
     width: 20.4375rem;
     height: 24.125rem;
@@ -171,5 +176,66 @@
     justify-content: space-between;
     gap: 0.8rem;
     margin-top: 1.5rem;
+  }
+  .menu-popup {
+    display: none;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  .Menu-pop-cont {
+    display: flex;
+    position: fixed;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20.4375rem;
+    height: 14rem;
+    border-radius: 0.625rem;
+    flex-direction: column;
+  }
+  .menu-list {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 85%;
+    height: 80%;
+  }
+  #menu-pop-bnt1,
+  #menu-pop-bnt2,
+  #menu-pop-bnt3 {
+    width: 17.4375rem;
+    height: 3rem;
+    flex-shrink: 0;
+    border-radius: 1.625rem;
+    border: 0;
+    border-radius: 1.625rem;
+    color: #304859;
+    text-align: center;
+    font-family: Atkinson Hyperlegible;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    cursor: pointer;
+  }
+  #menu-pop-bnt1 {
+    background: #fda214;
+    color: #fcfcfc;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
   }
 }
