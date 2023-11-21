@@ -8,6 +8,7 @@ let moveCount = 0;
 const startBtn = document.getElementById("start-btn");
 const setup = document.querySelector(".Homepage");
 const soloPlay = document.querySelector(".solo-play");
+const multiPlay = document.querySelector(".multi-play");
 const grid4x41 = document.querySelector(".grid-4x4");
 const grid6x61 = document.querySelector(".grid-6x6");
 const cards = document.querySelectorAll(".card");
@@ -66,6 +67,18 @@ const setupPage = () => {
       soloPlay.style.display = "flex";
       generateGrid(grid6x6, 6);
       checkGameCompletion(); // Check for game completion after generating the 6x6 grid
+    } else if (numberTheme && isTwoPlayer && is6x6grid) {
+      setup.style.display = "none";
+      grid4x41.style.display = "none";
+      multiPlay.style.display = "flex";
+      generateGrid(grid6x6, 6);
+      checkGameCompletion(); // Check for game completion after generating the 6x6 grid
+    } else if (numberTheme && isTwoPlayer && is4x4grid) {
+      setup.style.display = "none";
+      grid6x61.style.display = "none";
+      multiPlay.style.display = "flex";
+      generateGrid(grid4x4, 4);
+      checkGameCompletion(); // Check for game completion after generating the 4x4 grid
     } else {
       console.log("okay");
     }
@@ -169,14 +182,39 @@ function checkGameCompletion() {
   const matchedCards = document.querySelectorAll(".card.matched");
   console.log("Matched cards count:", matchedCards.length);
 
-  const totalCards = grid4x4.style.display === "grid" ? 16 : 36; // Check which grid is currently displayed
+  let totalCards;
+
+  const gridSize = getSelectedGridSize();
+
+  if (gridSize === 4) {
+    totalCards = 16;
+  } else if (gridSize === 6) {
+    totalCards = 36;
+  } else {
+    console.error("Invalid grid size");
+    return;
+  }
+
+  console.log("Total cards:", totalCards);
 
   if (matchedCards.length === totalCards) {
-    // All pairs are matched, stop the timer
     console.log("Timer stopped");
     clearInterval(timerInterval);
     popup(moveCount);
   }
+}
+
+function getSelectedGridSize() {
+  const gridSizeInputs = document.querySelectorAll(
+    'input[name="grid-size"]:checked'
+  );
+
+  if (gridSizeInputs.length === 0) {
+    console.error("No grid size selected");
+    return 4; // Default to 4x4 if no radio button is checked
+  }
+
+  return parseInt(gridSizeInputs[0].value);
 }
 
 function popup(moveCount) {
@@ -364,33 +402,33 @@ document.addEventListener("DOMContentLoaded", function () {
     popup.style.visibility = "hidden";
   }
 
-  function resetGame() {
-    // Reset the game to its initial state
-    moveCount = 0;
-    document.querySelector(".moves-count").textContent = moveCount;
-    document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
+  // function resetGame() {
+  //   // Reset the game to its initial state
+  //   moveCount = 0;
+  //   document.querySelector(".moves-count").textContent = moveCount;
+  //   document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
 
-    // Stop the timer if it's running
-    if (timerInterval) {
-      clearInterval(timerInterval);
-    }
+  //   // Stop the timer if it's running
+  //   if (timerInterval) {
+  //     clearInterval(timerInterval);
+  //   }
 
-    // Flip back any flipped cards
-    cards.forEach((card) => {
-      card.classList.remove("flip", "matched");
-    });
+  //   // Flip back any flipped cards
+  //   cards.forEach((card) => {
+  //     card.classList.remove("flip", "matched");
+  //   });
 
-    // Reset the board
-    resetBoard();
+  //   // Reset the board
+  //   resetBoard();
 
-    // Shuffle the cards
-    shuffleCards();
+  //   // Shuffle the cards
+  //   shuffleCards();
 
-    // Start the timer again
-    startTimer();
+  //   // Start the timer again
+  //   startTimer();
 
-    // Hide the popup
-    const popup = document.getElementById("myPopup");
-    popup.style.visibility = "hidden";
-  }
+  //   // Hide the popup
+  //   const popup = document.getElementById("myPopup");
+  //   popup.style.visibility = "hidden";
+  // }
 });
