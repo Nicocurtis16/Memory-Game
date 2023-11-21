@@ -5,6 +5,8 @@ let firstCard, secondCard;
 let timerInterval;
 let startTime;
 let moveCount = 0;
+const statusContainer = document.querySelector(".status-container");
+const statusText = document.getElementById("status-text");
 const startBtn = document.getElementById("start-btn");
 const setup = document.querySelector(".Homepage");
 const soloPlay = document.querySelector(".solo-play");
@@ -71,13 +73,13 @@ const setupPage = () => {
       setup.style.display = "none";
       grid4x41.style.display = "none";
       multiPlay.style.display = "flex";
-      generateGrid(grid6x6, 6);
+      generateGrid(grid6x66, 6);
       checkGameCompletion(); // Check for game completion after generating the 6x6 grid
     } else if (numberTheme && isTwoPlayer && is4x4grid) {
       setup.style.display = "none";
       grid6x61.style.display = "none";
       multiPlay.style.display = "flex";
-      generateGrid(grid4x4, 4);
+      generateGrid(grid4x44, 4);
       checkGameCompletion(); // Check for game completion after generating the 4x4 grid
     } else {
       console.log("okay");
@@ -89,6 +91,8 @@ setupPage();
 
 const grid6x6 = document.querySelector(".grid-6x6");
 const grid4x4 = document.querySelector(".grid-4x4");
+const grid6x66 = document.querySelector(".multi-6x6");
+const grid4x44 = document.querySelector(".multi-4x4");
 
 // ...
 function startTimer() {
@@ -402,33 +406,46 @@ document.addEventListener("DOMContentLoaded", function () {
     popup.style.visibility = "hidden";
   }
 
-  // function resetGame() {
-  //   // Reset the game to its initial state
-  //   moveCount = 0;
-  //   document.querySelector(".moves-count").textContent = moveCount;
-  //   document.querySelector(".moves-count-1").textContent = "0:00"; // Reset the timer text
+  function handlePlayerChange() {
+    const checkedInput = document.querySelectorAll(
+      'input[name="players"]:checked'
+    );
+    const selectedPlayers =
+      checkedInput.length > 0 ? checkedInput[0].value : "1";
 
-  //   // Stop the timer if it's running
-  //   if (timerInterval) {
-  //     clearInterval(timerInterval);
-  //   }
+    const isTwoPlayer = Array.from(checkedInput).some(
+      (radio) => radio.value === "2"
+    );
+    const isThreePlayer = Array.from(checkedInput).some(
+      (radio) => radio.value === "3"
+    );
+    const isFourPlayer = Array.from(checkedInput).some(
+      (radio) => radio.value === "4"
+    );
 
-  //   // Flip back any flipped cards
-  //   cards.forEach((card) => {
-  //     card.classList.remove("flip", "matched");
-  //   });
+    if (isTwoPlayer || isThreePlayer || isFourPlayer) {
+      // Display the player 2 grid and generate it accordingly
+      multiPlay.style.display = "flex";
+      generateGridPlayer2(gridPlayer2, selectedPlayers);
 
-  //   // Reset the board
-  //   resetBoard();
+      // Display the status container and update the text
+      statusContainer.style.display = "block";
+      updateStatusText(selectedPlayers);
+    } else {
+      // Hide the player 2 grid and the status container
+      multiPlay.style.display = "none";
+      statusContainer.style.display = "none";
+    }
+  }
 
-  //   // Shuffle the cards
-  //   shuffleCards();
+  // ...
 
-  //   // Start the timer again
-  //   startTimer();
+  function updateStatusText(numPlayers) {
+    // Update the status text based on the number of players
+    statusText.textContent = `Status for ${numPlayers} players: Waiting for prayers to finish...`;
 
-  //   // Hide the popup
-  //   const popup = document.getElementById("myPopup");
-  //   popup.style.visibility = "hidden";
-  // }
+    // Add any additional logic or customization based on the number of players
+  }
+
+  // ...
 });

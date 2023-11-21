@@ -184,6 +184,19 @@
     gap: 0.8rem;
     margin-top: 1.5rem;
   }
+  .grid-btn,
+  .Prayer-btn,
+  .Theme-btn {
+    font-size: 1rem;
+  }
+  #players-title,
+  #Theme-title,
+  #grid-title {
+    font-size: 0.9375rem;
+  }
+  .start-btn {
+    font-size: 1.125rem;
+  }
   .menu-popup {
     display: none;
     position: absolute;

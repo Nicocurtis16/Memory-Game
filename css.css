@@ -335,6 +335,21 @@ input[type="radio"] {
   width: 50%;
   justify-content: space-between;
 }
+.multidown {
+  display: flex;
+  border: 0.2rem solid;
+  width: 50%;
+  height: 4rem;
+  justify-content: space-between;
+}
+.status-container {
+  width: 15.9375rem;
+  height: 4.5rem;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+  background: #dfe7ec;
+}
+
 .display {
   display: flex;
   width: 15.9375rem;
